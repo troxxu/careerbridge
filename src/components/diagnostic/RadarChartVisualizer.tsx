@@ -155,19 +155,24 @@ export function RadarChartVisualizer({ result, onRetake }: RadarChartProps) {
       </div>
 
       {/* CTAs */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t border-slate-100">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-3 border-t border-slate-100">
         {onRetake && (
           <Button
             variant="outline"
             onClick={onRetake}
-            className="w-full sm:w-auto text-xs font-semibold"
+            className="w-full sm:w-auto text-xs font-semibold rounded-xl"
           >
             Ulangi Kuesioner
           </Button>
         )}
-        <div className="flex items-center gap-3 w-full sm:w-auto">
+        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+          <Link href="/?preview=true" className="w-full sm:w-auto">
+            <Button variant="outline" className="w-full sm:w-auto border-slate-300 text-slate-700 hover:bg-slate-50 font-semibold text-xs sm:text-sm rounded-xl">
+              Buka Beranda & Telusuri Mentor
+            </Button>
+          </Link>
           <Link href="/dashboard/student" className="w-full sm:w-auto">
-            <Button className="w-full sm:w-auto bg-brand-blue hover:bg-blue-700 font-bold text-xs sm:text-sm">
+            <Button className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm rounded-xl shadow-xs">
               Lanjut ke Student Workspace
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>

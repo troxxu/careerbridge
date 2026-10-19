@@ -14,13 +14,16 @@ import {
   HelpCircle, 
   Sparkles, 
   Zap,
-  RotateCcw
+  RotateCcw,
+  UserCheck
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { useAuth } from '@/context/AuthContext';
 
 const PILLAR_KEYS: PillarKey[] = ['clarity', 'competency', 'branding', 'interview', 'networking'];
 
 export function DiagnosticForm() {
+  const { user, updateUserCRS } = useAuth();
   const [currentStep, setCurrentStep] = useState<number>(0); // 0 to 4 (5 pillars)
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [result, setResult] = useState<CRSAssessmentResult | null>(null);
@@ -89,6 +92,11 @@ export function DiagnosticForm() {
     const calculated = calculateCRS(formattedAnswers);
     setResult(calculated);
 
+    // Save score to user state and localStorage
+    try {
+      updateUserCRS(calculated.overallScore, calculated.tier);
+    } catch (e) {}
+
     // Launch celebratory confetti
     try {
       confetti({
@@ -144,18 +152,43 @@ export function DiagnosticForm() {
   ];
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-10 shadow-lg space-y-8">
+    <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-10 shadow-sm space-y-6">
+      {/* Authenticated Participant Banner */}
+      {user && (
+        <div className="flex items-center justify-between p-3.5 bg-emerald-50/80 border border-emerald-200 rounded-2xl text-xs text-slate-700">
+          <div className="flex items-center gap-2.5">
+            <div className="h-8 w-8 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs">
+              {user.name.charAt(0)}
+            </div>
+            <div>
+              <div className="font-bold text-slate-900 flex items-center gap-2">
+                <span>{user.name}</span>
+                <span className="text-[10px] font-semibold bg-emerald-200/60 text-emerald-800 px-2 py-0.5 rounded-full">
+                  Peserta Terverifikasi ({user.authProvider === 'google' ? 'Google' : 'Email'})
+                </span>
+              </div>
+              <div className="text-[11px] text-slate-500 font-normal">
+                NRP {user.nrp || '5007201191'} • {user.department || 'Teknik Elektro ITS'} • Target: {user.targetIndustry || 'Oil & Gas'}
+              </div>
+            </div>
+          </div>
+          <span className="text-[11px] font-semibold text-emerald-700 hidden sm:inline-block">
+            Sesi Asesmen Aktif ✓
+          </span>
+        </div>
+      )}
+
       {/* Top Header & Demo Quick Fill Toolbar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-6">
         <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-blue uppercase tracking-wider mb-1">
+          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 uppercase tracking-wider mb-1">
             <Sparkles className="h-3.5 w-3.5" />
-            Instrumen Diagnostik Kesiapan Karier
+            <span>Instrumen Diagnostik Kesiapan Karier</span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-black text-brand-navy">
+          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
             Pilar {currentStep + 1} dari 5: {currentPillarConfig.label}
           </h2>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-slate-500 mt-0.5 font-normal">
             {currentPillarConfig.description} (Bobot {Math.round(currentPillarConfig.weight * 100)}%)
           </p>
         </div>

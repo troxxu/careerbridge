@@ -2,6 +2,21 @@
 
 export type UserRole = 'student' | 'mentor' | 'institution' | 'admin';
 
+export interface AuthUser {
+  id: string;
+  name: string;
+  email: string;
+  avatarUrl: string;
+  role: UserRole;
+  department?: string;
+  nrp?: string;
+  university?: string;
+  targetIndustry?: string;
+  crsScore?: number;
+  crsTier?: string;
+  authProvider?: 'google' | 'credentials';
+}
+
 export type PillarKey = 'clarity' | 'competency' | 'branding' | 'interview' | 'networking';
 
 export interface DiagnosticQuestion {
