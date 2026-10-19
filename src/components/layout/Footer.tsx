@@ -4,11 +4,11 @@ import { Compass, AlertTriangle, ShieldCheck, HeartHandshake } from 'lucide-reac
 
 export function Footer() {
   const teamMembers = [
-    { name: 'Maheswara Yogha Putra Al Ardha', nrp: '5022231188', role: 'Project Lead & Product' },
-    { name: 'Ardyan Bagas Trihutama', nrp: '5022231171', role: 'Curriculum & Program' },
-    { name: 'Thoriq Hilmuddin', nrp: '5022231191', role: 'Tech & Architecture' },
-    { name: 'M. Aqila Daffa Arya Bimantara', nrp: '5022231187', role: 'Mentor Relations' },
-    { name: 'Rifky Ananda Riwendra', nrp: '5022231184', role: 'Operations & Quality' },
+    { name: 'Maheswara Yogha Putra Al Ardha', nrp: '5022231188', role: 'Project Leader (Ideation & Business Plan Report)' },
+    { name: 'Ardyan Bagas Trihutama', nrp: '5022231171', role: 'Co-Project Leader (Presentation & Final Pitch)' },
+    { name: 'Thoriq Hilmuddin', nrp: '5022231191', role: 'Technical Coordinator (Web Development & Architecture)' },
+    { name: 'Rifky Ananda Riwendra', nrp: '5022231184', role: 'Technical Coordinator (Web Refinement & Operations)' },
+    { name: 'M. Aqila Daffa Arya Bimantara', nrp: '5022231187', role: 'External Coordinator (HR, Awareness & Broadcast)' },
   ];
 
   return (
