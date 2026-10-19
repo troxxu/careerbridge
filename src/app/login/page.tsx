@@ -17,7 +17,6 @@ import {
   ArrowUpRight,
   GraduationCap,
   AlertCircle,
-  KeyRound,
   Mail,
   Lock,
   User,
@@ -63,7 +62,6 @@ export default function LoginPage() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [resetStep, setResetStep] = useState<'request' | 'verify'>('request');
-  const [generatedTokenHint, setGeneratedTokenHint] = useState<string | null>(null);
 
   // Status and Alerts
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -150,8 +148,7 @@ export default function LoginPage() {
     if (!res.success) {
       setErrorMessage(res.error || 'Email tidak ditemukan.');
     } else {
-      setSuccessMessage(res.message || 'Tautan reset telah dikirim ke email Anda.');
-      setGeneratedTokenHint(res.resetToken || null);
+      setSuccessMessage(res.message || 'Instruksi dan 6 digit kode pemulihan telah dikirim ke email Anda.');
       setResetStep('verify');
     }
   };
@@ -160,6 +157,11 @@ export default function LoginPage() {
   const handleSetNewPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     clearMessages();
+
+    if (!resetToken.trim()) {
+      setErrorMessage('Silakan masukkan 6 digit kode verifikasi yang dikirim ke email Anda.');
+      return;
+    }
 
     if (!newPassword || newPassword.length < 6) {
       setErrorMessage('Kata sandi baru minimal 6 karakter.');
@@ -170,15 +172,17 @@ export default function LoginPage() {
       return;
     }
 
-    const res = await resetPasswordWithToken(resetEmail, newPassword);
+    const res = await resetPasswordWithToken(resetEmail, resetToken, newPassword);
     if (!res.success) {
       setErrorMessage(res.error || 'Gagal mengatur ulang kata sandi.');
     } else {
       setSuccessMessage('Kata sandi berhasil diperbarui! Silakan masuk dengan kata sandi baru Anda.');
       setLoginEmail(resetEmail);
       setLoginPassword('');
+      setResetToken('');
+      setNewPassword('');
+      setConfirmNewPassword('');
       setResetStep('request');
-      setGeneratedTokenHint(null);
       setAuthMode('login');
     }
   };
@@ -732,17 +736,24 @@ export default function LoginPage() {
                     </form>
                   ) : (
                     <form onSubmit={handleSetNewPassword} className="space-y-4">
-                      {/* Token Instruction Box */}
-                      <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs space-y-1.5">
+                      {/* Email Dispatch Notice Box */}
+                      <div className="p-3.5 bg-emerald-50/80 border border-emerald-200 rounded-xl text-xs space-y-1.5">
                         <div className="font-bold text-emerald-900 flex items-center gap-1.5">
-                          <KeyRound className="h-4 w-4 text-emerald-700" />
-                          <span>Simulasi Pengiriman Email Pemulihan:</span>
+                          <Mail className="h-4 w-4 text-emerald-700" />
+                          <span>Kode Verifikasi Telah Dikirim ke Email</span>
                         </div>
-                        <p className="text-emerald-800">
-                          Email terkirim ke <strong>{resetEmail}</strong>. Kode verifikasi keamanan Anda adalah:
+                        <p className="text-emerald-800 leading-relaxed">
+                          Kami telah mengirimkan 6 digit kode keamanan ke <strong>{resetEmail}</strong>. Silakan periksa Kotak Masuk (Inbox) atau folder Spam email Anda.
                         </p>
-                        <div className="p-2 bg-white rounded-lg border border-emerald-300 font-mono font-bold text-sm text-center text-emerald-700 tracking-widest">
-                          {generatedTokenHint || 'CB-781920'}
+                        <div className="flex items-center justify-between text-[11px] text-emerald-700 pt-1">
+                          <span>Tidak menerima email?</span>
+                          <button
+                            type="button"
+                            onClick={() => setResetStep('request')}
+                            className="font-bold underline hover:text-emerald-950"
+                          >
+                            Kirim Ulang Kode
+                          </button>
                         </div>
                       </div>
 

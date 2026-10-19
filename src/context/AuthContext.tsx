@@ -29,9 +29,10 @@ interface AuthContextType {
   ) => Promise<{ success: boolean; error?: string }>;
   requestPasswordReset: (
     email: string
-  ) => Promise<{ success: boolean; error?: string; message?: string; resetToken?: string }>;
+  ) => Promise<{ success: boolean; error?: string; message?: string }>;
   resetPasswordWithToken: (
     email: string,
+    token: string,
     newPassword: string
   ) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
@@ -254,7 +255,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const requestPasswordReset = async (
     email: string
-  ): Promise<{ success: boolean; error?: string; message?: string; resetToken?: string }> => {
+  ): Promise<{ success: boolean; error?: string; message?: string }> => {
     setIsLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 600));
 
@@ -280,23 +281,44 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     dbUsers[userIndex].resetToken = token;
     saveUsersToDB(dbUsers);
 
+    // Trigger server-side email dispatch API
+    try {
+      await fetch('/api/auth/send-reset-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: cleanEmail,
+          token,
+          name: dbUsers[userIndex].name,
+        }),
+      });
+    } catch (err) {
+      console.error('[AuthContext] Failed to call send-reset-email API:', err);
+    }
+
     setIsLoading(false);
     return {
       success: true,
-      message: `Tautan dan kode reset kata sandi telah dikirim ke ${cleanEmail}. Gunakan kode ${token} untuk membuat kata sandi baru.`,
-      resetToken: token,
+      message: `Instruksi dan 6 digit kode pemulihan telah dikirim ke alamat email Anda (${cleanEmail}). Silakan periksa Kotak Masuk (Inbox) atau folder Spam email Anda.`,
     };
   };
 
   const resetPasswordWithToken = async (
     email: string,
+    token: string,
     newPassword: string
   ): Promise<{ success: boolean; error?: string }> => {
     setIsLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     const cleanEmail = email.trim().toLowerCase();
+    const cleanToken = token.trim();
     const cleanPassword = newPassword.trim();
+
+    if (!cleanToken) {
+      setIsLoading(false);
+      return { success: false, error: 'Silakan masukkan 6 digit kode verifikasi yang dikirim ke email Anda.' };
+    }
 
     if (!cleanPassword || cleanPassword.length < 6) {
       setIsLoading(false);
@@ -311,8 +333,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return { success: false, error: 'Akun tidak ditemukan.' };
     }
 
-    dbUsers[userIndex].password = cleanPassword;
-    delete dbUsers[userIndex].resetToken;
+    const userAccount = dbUsers[userIndex];
+    if (!userAccount.resetToken || userAccount.resetToken !== cleanToken) {
+      setIsLoading(false);
+      return {
+        success: false,
+        error: 'Kode verifikasi email salah atau telah kedaluwarsa. Silakan periksa kembali email Anda atau minta kode baru.',
+      };
+    }
+
+    // Code verified successfully, update password and invalidate reset token
+    userAccount.password = cleanPassword;
+    delete userAccount.resetToken;
     saveUsersToDB(dbUsers);
 
     setIsLoading(false);
