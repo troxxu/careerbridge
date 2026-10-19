@@ -38,21 +38,35 @@ const config: Config = {
         foreground: "hsl(var(--foreground, 222 47% 11%))",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "-apple-system", "sans-serif"],
+        sans: ["var(--font-sans)", "Plus Jakarta Sans", "Inter", "system-ui", "-apple-system", "sans-serif"],
+        mono: ["var(--font-mono)", "JetBrains Mono", "monospace"],
       },
       boxShadow: {
         card: "0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.05)",
         "card-hover": "0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.06)",
         bp: "0 4px 20px -2px rgba(16, 185, 129, 0.15)",
+        subtle: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
       },
       keyframes: {
         "pulse-slow": {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.8" },
         },
+        shine: {
+          "0%": { "background-position": "0% 0%" },
+          "50%": { "background-position": "100% 100%" },
+          to: { "background-position": "0% 0%" },
+        },
+        "border-beam": {
+          "100%": {
+            "offset-distance": "100%",
+          },
+        },
       },
       animation: {
         "pulse-slow": "pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        shine: "shine var(--duration, 14s) infinite linear",
+        "border-beam": "border-beam calc(var(--duration, 6)*1s) infinite linear",
       },
     },
   },

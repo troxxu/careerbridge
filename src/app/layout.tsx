@@ -1,7 +1,22 @@
 import type { Metadata } from 'next';
+import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-sans',
+  display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-mono',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Career Bridge: Platform Pengembangan Kesiapan Karier Mahasiswa Teknik & Energi',
@@ -32,8 +47,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id">
-      <body className="min-h-screen flex flex-col bg-white text-slate-900 font-sans">
+    <html lang="id" className={`${plusJakarta.variable} ${jetbrainsMono.variable}`}>
+      <body className="min-h-screen flex flex-col bg-white text-slate-900 font-sans selection:bg-emerald-600 selection:text-white">
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

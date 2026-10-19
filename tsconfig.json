@@ -30,6 +30,7 @@
   "exclude": [
     "node_modules",
     "CONTOH WEBSITE REPO BPS-UPDATED GITHUB",
-    "anti-slop-main"
+    "anti-slop-main",
+    "magicui-main"
   ]
 }

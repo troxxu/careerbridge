@@ -20,6 +20,8 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { NumberTicker } from '@/components/magicui/number-ticker';
+import { GridPattern } from '@/components/magicui/grid-pattern';
 import {
   BarChart,
   Bar,
@@ -102,24 +104,29 @@ export default function B2BInstitutionalDashboardPage() {
     <div className="bg-slate-50 min-h-screen py-8">
       <div className="container max-w-6xl mx-auto px-4 space-y-8">
         {/* Institutional Header Banner */}
-        <div className="bg-gradient-to-r from-slate-900 via-brand-navy to-slate-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 rounded-full bg-blue-500/20 border border-blue-400/30 px-3 py-1 text-xs font-bold text-brand-blue-light">
-              <Building2 className="h-4 w-4" />
-              Portal Kemitraan Institusi & Himpunan Mahasiswa
+        <div className="relative overflow-hidden bg-slate-900 border border-slate-800 text-white rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <GridPattern
+            width={32}
+            height={32}
+            className="opacity-15 stroke-slate-500 [mask-image:radial-gradient(ellipse_at_center,white_30%,transparent_80%)]"
+          />
+          <div className="space-y-2 relative z-10">
+            <div className="inline-flex items-center gap-2 rounded-full bg-blue-500/10 border border-blue-400/30 px-3 py-1 text-xs font-semibold text-blue-300">
+              <Building2 className="h-3.5 w-3.5" />
+              <span>Portal Kemitraan Institusi & Himpunan Mahasiswa</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-white">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
               Institutional Impact & Outcome Analytics
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300">
-              Mitra Program: <strong>{current.name}</strong> • Cohort Batch 1 ({current.enrolled} Mahasiswa)
+            <p className="text-xs sm:text-sm text-slate-300 font-normal">
+              Mitra Program: <strong className="text-white">{current.name}</strong> • Cohort Batch 1 ({current.enrolled} Mahasiswa)
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
+          <div className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
             <Button
               onClick={handleExportReport}
-              className="bg-brand-bp hover:bg-green-700 text-white font-bold text-xs sm:text-sm gap-2 shadow-lg rounded-xl"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm gap-2 shadow-xs rounded-xl"
             >
               <Download className="h-4 w-4" />
               {downloading ? 'Memproses LPJ...' : 'Pratinjau LPJ & Unduh PDF'}
@@ -130,7 +137,7 @@ export default function B2BInstitutionalDashboardPage() {
         {/* Department Switcher Bar (BPS BEM FTEIC Signature) */}
         <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
-            <Filter className="h-4 w-4 text-brand-blue" />
+            <Filter className="h-4 w-4 text-emerald-600" />
             <span>Pilih Lingkup Analisis Departemen / Himpunan:</span>
           </div>
 
@@ -139,7 +146,7 @@ export default function B2BInstitutionalDashboardPage() {
               onClick={() => setSelectedDept('elektro')}
               className={`px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all whitespace-nowrap ${
                 selectedDept === 'elektro'
-                  ? 'bg-white text-brand-navy shadow-xs'
+                  ? 'bg-white text-slate-900 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -149,7 +156,7 @@ export default function B2BInstitutionalDashboardPage() {
               onClick={() => setSelectedDept('komputer')}
               className={`px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all whitespace-nowrap ${
                 selectedDept === 'komputer'
-                  ? 'bg-white text-brand-navy shadow-xs'
+                  ? 'bg-white text-slate-900 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -159,7 +166,7 @@ export default function B2BInstitutionalDashboardPage() {
               onClick={() => setSelectedDept('all')}
               className={`px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all whitespace-nowrap ${
                 selectedDept === 'all'
-                  ? 'bg-brand-navy text-white shadow-xs'
+                  ? 'bg-slate-900 text-white shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -171,36 +178,38 @@ export default function B2BInstitutionalDashboardPage() {
         {/* 4 Key Performance Indicators (IKU) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+            <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">
               Rata-Rata Kenaikan CRS (ΔCRS)
             </div>
-            <div className="text-3xl font-black text-emerald-600 flex items-baseline gap-1">
-              +{current.delta}%
-              <span className="text-xs font-bold text-slate-400">pts</span>
+            <div className="text-3xl font-bold text-emerald-600 font-mono tracking-tight flex items-baseline gap-1">
+              <span>+</span>
+              <NumberTicker value={current.delta} decimalPlaces={1} />
+              <span className="text-xs font-semibold text-slate-400 font-sans">pts</span>
             </div>
-            <div className="text-[11px] text-emerald-700 font-semibold mt-1">
+            <div className="text-[11px] text-emerald-700 font-medium mt-1">
               ✓ Melebihi target minimum (+20%)
             </div>
           </div>
 
           <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+            <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">
               Pre vs Post Baseline
             </div>
-            <div className="text-3xl font-black text-brand-navy">
+            <div className="text-3xl font-bold text-slate-900 font-mono tracking-tight">
               {current.pre} → {current.post}
             </div>
-            <div className="text-[11px] text-brand-blue font-semibold mt-1">
+            <div className="text-[11px] text-blue-700 font-medium mt-1">
               Skor akhir predikat Industry Ready
             </div>
           </div>
 
           <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+            <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">
               Completion Rate (Kelulusan)
             </div>
-            <div className="text-3xl font-black text-brand-blue">
-              {current.completion}%
+            <div className="text-3xl font-bold text-blue-600 font-mono tracking-tight flex items-baseline gap-1">
+              <NumberTicker value={current.completion} decimalPlaces={1} />
+              <span className="text-xl font-medium font-sans">%</span>
             </div>
             <div className="text-[11px] text-slate-500 font-medium mt-1">
               Kehadiran &gt; 80% dan submit action plan
@@ -208,11 +217,12 @@ export default function B2BInstitutionalDashboardPage() {
           </div>
 
           <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+            <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">
               Tingkat Kepuasan Peserta
             </div>
-            <div className="text-3xl font-black text-brand-bp">
-              {current.satisfaction}%
+            <div className="text-3xl font-bold text-emerald-700 font-mono tracking-tight flex items-baseline gap-1">
+              <NumberTicker value={current.satisfaction} decimalPlaces={1} />
+              <span className="text-xl font-medium font-sans">%</span>
             </div>
             <div className="text-[11px] text-slate-500 font-medium mt-1">
               Evaluasi relevansi industri &gt; 4.7/5

@@ -29,6 +29,9 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import confetti from 'canvas-confetti';
+import { BorderBeam } from '@/components/magicui/border-beam';
+import { DotPattern } from '@/components/magicui/dot-pattern';
+import { NumberTicker } from '@/components/magicui/number-ticker';
 
 export default function StudentDashboardPage() {
   const currentStudent = MOCK_STUDENTS[0]; // Thoriq Hilmuddin
@@ -144,53 +147,58 @@ export default function StudentDashboardPage() {
     <div className="bg-slate-50 min-h-screen py-8">
       <div className="container max-w-6xl mx-auto px-4 space-y-8">
         {/* Top Header Card */}
-        <div className="bg-gradient-to-r from-brand-navy via-slate-900 to-brand-slate text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="flex items-center gap-4">
-            <div className="h-16 w-16 rounded-2xl bg-brand-blue flex items-center justify-center font-black text-2xl text-white shadow-md">
+        <div className="relative overflow-hidden bg-slate-900 border border-slate-800 text-white rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <DotPattern
+            width={24}
+            height={24}
+            className="opacity-15 text-slate-400 [mask-image:radial-gradient(ellipse_at_center,white_30%,transparent_80%)]"
+          />
+          <div className="flex items-center gap-4 relative z-10">
+            <div className="h-16 w-16 rounded-2xl bg-emerald-600 flex items-center justify-center font-bold text-2xl text-white shadow-xs">
               {currentStudent.name.charAt(0)}
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-black text-white">
+                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
                   {currentStudent.name}
                 </h1>
                 <Badge variant="bp" className="text-[10px]">
                   Batch 1 Active Mentee
                 </Badge>
               </div>
-              <p className="text-xs sm:text-sm text-slate-300">
+              <p className="text-xs sm:text-sm text-slate-300 font-normal">
                 NRP {currentStudent.nrp} • {currentStudent.department} (Semester {currentStudent.semester})
               </p>
               <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400 mt-1">
-                <span>Target Industri: <strong>{currentStudent.targetIndustry}</strong></span>
+                <span>Target Industri: <strong className="text-slate-200">{currentStudent.targetIndustry}</strong></span>
                 <span>•</span>
-                <span>Fokus: <strong>{currentStudent.targetFunction}</strong></span>
+                <span>Fokus: <strong className="text-slate-200">{currentStudent.targetFunction}</strong></span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 flex items-center gap-6 self-stretch md:self-auto justify-around">
+          <div className="relative z-10 bg-slate-800/80 backdrop-blur-xs rounded-2xl p-4 border border-slate-700/80 flex items-center gap-6 self-stretch md:self-auto justify-around">
             <div className="text-center">
-              <div className="text-[11px] uppercase tracking-wider text-slate-300 font-bold">
+              <div className="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
                 Pre-Test CRS
               </div>
-              <div className="text-3xl font-black text-emerald-400">
-                {currentStudent.crsScore}
-                <span className="text-xs text-slate-400 font-normal">/100</span>
+              <div className="text-3xl font-bold text-emerald-400 font-mono tracking-tight flex items-center justify-center">
+                <NumberTicker value={currentStudent.crsScore ?? 54} />
+                <span className="text-xs text-slate-400 font-normal font-sans ml-1">/100</span>
               </div>
-              <div className="text-[10px] text-emerald-300 font-semibold">
+              <div className="text-[10px] text-emerald-300 font-medium">
                 Emerging Readiness
               </div>
             </div>
-            <div className="h-10 w-px bg-white/20" />
+            <div className="h-10 w-px bg-slate-700" />
             <div className="text-center">
-              <div className="text-[11px] uppercase tracking-wider text-slate-300 font-bold">
+              <div className="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
                 Cohort Progress
               </div>
-              <div className="text-3xl font-black text-brand-blue-light">
+              <div className="text-3xl font-bold text-blue-400 font-mono tracking-tight">
                 75%
               </div>
-              <div className="text-[10px] text-slate-300 font-semibold">
+              <div className="text-[10px] text-slate-300 font-medium">
                 Minggu ke-3 Aktif
               </div>
             </div>
@@ -198,18 +206,24 @@ export default function StudentDashboardPage() {
         </div>
 
         {/* Zero-Leakage Privacy Security Alert Bar (BPS BEM FTEIC Standard) */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3 text-xs text-slate-700 text-center sm:text-left">
+        <div className="relative overflow-hidden bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+          <BorderBeam
+            size={56}
+            duration={7}
+            colorFrom={isUnlocked ? '#059669' : '#D97706'}
+            colorTo={isUnlocked ? '#10B981' : '#2563EB'}
+          />
+          <div className="flex items-center gap-3 text-xs text-slate-700 text-center sm:text-left relative z-10">
             <div className={`p-2 rounded-xl ${isUnlocked ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>
               {isUnlocked ? <Unlock className="h-5 w-5" /> : <Lock className="h-5 w-5" />}
             </div>
             <div>
-              <div className="font-bold text-slate-900">
+              <div className="font-bold text-slate-900 tracking-tight">
                 {isUnlocked
                   ? 'Sesi Privat Aktif: Evaluasi Mentor & Tautan Meet Terverifikasi'
                   : 'Mode Privasi Terproteksi (UU PDP No. 27/2022)'}
               </div>
-              <div className="text-slate-500 text-[11px]">
+              <div className="text-slate-500 text-[11px] font-normal">
                 {isUnlocked
                   ? 'Anda dapat melihat feedback individual mentor dan lembar review privat.'
                   : 'Masukkan PIN personal mahasiswa (Demo PIN: 1191) untuk mengakses review privat & tautan Google Meet.'}
@@ -217,7 +231,7 @@ export default function StudentDashboardPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 relative z-10">
             {isUnlocked ? (
               <Button
                 variant="outline"

@@ -18,6 +18,8 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { BorderBeam } from '@/components/magicui/border-beam';
+import { DotPattern } from '@/components/magicui/dot-pattern';
 
 export default function MentorDashboardPage() {
   const mentor = MOCK_MENTORS[0]; // Ir. Hendra Wijaya (BP)
@@ -51,8 +53,13 @@ export default function MentorDashboardPage() {
     <div className="bg-slate-50 min-h-screen py-8">
       <div className="container max-w-6xl mx-auto px-4 space-y-8">
         {/* Mentor Profile Header */}
-        <div className="bg-gradient-to-r from-brand-navy via-slate-900 to-slate-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="flex items-center gap-4">
+        <div className="relative overflow-hidden bg-slate-900 border border-slate-800 text-white rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <DotPattern
+            width={24}
+            height={24}
+            className="opacity-15 text-slate-400 [mask-image:radial-gradient(ellipse_at_center,white_30%,transparent_80%)]"
+          />
+          <div className="flex items-center gap-4 relative z-10">
             <img
               src={mentor.avatarUrl}
               alt={mentor.name}
@@ -60,44 +67,44 @@ export default function MentorDashboardPage() {
             />
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-black text-white">
+                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
                   {mentor.name}
                 </h1>
                 <Badge variant="bp" className="text-[10px]">
                   Verified Mentor
                 </Badge>
               </div>
-              <div className="text-xs sm:text-sm text-brand-bp-light font-semibold mt-0.5">
+              <div className="text-xs sm:text-sm text-emerald-400 font-semibold mt-0.5">
                 {mentor.currentTitle} • {mentor.companyName}
               </div>
-              <div className="text-xs text-slate-400 mt-1">
+              <div className="text-xs text-slate-400 mt-1 font-normal">
                 Alumni Teknik Elektro ITS • Industri: {mentor.industryDomain} ({mentor.yearsOfExperience} Thn Pengalaman)
               </div>
             </div>
           </div>
 
-          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 flex items-center gap-6 self-stretch md:self-auto justify-around">
+          <div className="relative z-10 bg-slate-800/80 backdrop-blur-xs rounded-2xl p-4 border border-slate-700/80 flex items-center gap-6 self-stretch md:self-auto justify-around">
             <div className="text-center">
-              <div className="text-[11px] uppercase tracking-wider text-slate-300 font-bold">
+              <div className="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
                 Mentee Kelompok
               </div>
-              <div className="text-3xl font-black text-white">
+              <div className="text-3xl font-bold text-white font-mono tracking-tight">
                 {mentees.length}{' '}
-                <span className="text-xs text-slate-400 font-normal">/ 5 maks</span>
+                <span className="text-xs text-slate-400 font-normal font-sans">/ 5 maks</span>
               </div>
-              <div className="text-[10px] text-emerald-400 font-semibold">
+              <div className="text-[10px] text-emerald-400 font-medium">
                 Alokasi Penuh
               </div>
             </div>
-            <div className="h-10 w-px bg-white/20" />
+            <div className="h-10 w-px bg-slate-700" />
             <div className="text-center">
-              <div className="text-[11px] uppercase tracking-wider text-slate-300 font-bold">
+              <div className="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
                 Jadwal W4
               </div>
-              <div className="text-sm font-bold text-brand-bp-light">
+              <div className="text-sm font-semibold text-emerald-400">
                 Sabtu, 10:00 WIB
               </div>
-              <div className="text-[10px] text-slate-300">
+              <div className="text-[10px] text-slate-400 font-normal">
                 Google Meet Terjadwal
               </div>
             </div>
@@ -244,16 +251,17 @@ export default function MentorDashboardPage() {
 
           {/* Right Column: 5-Minute Post-Session Evaluation Rubric (7 cols) */}
           <div className="lg:col-span-7">
-            <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
-              <div className="border-b border-slate-100 pb-4">
-                <div className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-bp uppercase tracking-wider mb-1">
+            <div className="relative overflow-hidden bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
+              <BorderBeam size={64} duration={8} colorFrom="#059669" colorTo="#2563EB" />
+              <div className="border-b border-slate-100 pb-4 relative z-10">
+                <div className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 uppercase tracking-wider mb-1">
                   <Award className="h-3.5 w-3.5" />
-                  Form Rubrik Evaluasi Pasca-Sesi (5 Menit)
+                  <span>Form Rubrik Evaluasi Pasca-Sesi (5 Menit)</span>
                 </div>
-                <h3 className="text-xl font-black text-brand-navy">
+                <h3 className="text-xl font-bold tracking-tight text-slate-900">
                   Evaluasi Mentee: {selectedMentee.name}
                 </h3>
-                <p className="text-xs text-slate-500 mt-0.5">
+                <p className="text-xs text-slate-500 mt-0.5 font-normal">
                   Berikan penilaian terstruktur untuk membantu mahasiswa memahami kekuatan dan area perbaikan prioritas.
                 </p>
               </div>

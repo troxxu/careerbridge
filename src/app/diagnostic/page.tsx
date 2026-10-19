@@ -1,6 +1,7 @@
 import React from 'react';
 import { DiagnosticForm } from '@/components/diagnostic/DiagnosticForm';
 import { Compass, ShieldCheck, Award, Sparkles, CheckCircle2 } from 'lucide-react';
+import { GridPattern } from '@/components/magicui/grid-pattern';
 
 export const metadata = {
   title: 'Career Diagnostic Test (Free) : Career Bridge',
@@ -10,19 +11,24 @@ export const metadata = {
 
 export default function DiagnosticPage() {
   return (
-    <div className="bg-slate-50 min-h-screen py-12">
-      <div className="container max-w-4xl mx-auto px-4">
+    <div className="relative overflow-hidden bg-slate-50 min-h-screen py-12">
+      <GridPattern
+        width={32}
+        height={32}
+        className="opacity-30 stroke-slate-200 [mask-image:radial-gradient(ellipse_at_center,white_20%,transparent_80%)]"
+      />
+      <div className="container max-w-4xl mx-auto px-4 relative z-10">
         {/* Page Header */}
         <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
-          <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3.5 py-1 text-xs font-bold text-brand-blue">
-            <Compass className="h-4 w-4" />
-            Standar Evaluasi Mandiri 2026
+          <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1 text-xs font-semibold text-slate-700 shadow-xs">
+            <Compass className="h-3.5 w-3.5 text-emerald-600" />
+            <span>Standar Evaluasi Mandiri 2026</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-brand-navy tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
             Career Diagnostic Assessment
           </h1>
-          <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-            Jawab 25 pertanyaan evaluasi diri (skala Likert 1-5) untuk memetakan kesiapan karier Anda di sektor teknik dan energi. Hasil instan dilengkapi diagram <strong>Spider Web Radar Chart</strong> dan rekomendasi strategis.
+          <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+            Jawab 25 pertanyaan evaluasi diri (skala Likert 1-5) untuk memetakan kesiapan karier Anda di sektor teknik dan energi. Hasil instan dilengkapi diagram <strong className="font-semibold text-slate-800">Spider Web Radar Chart</strong> dan rekomendasi strategis.
           </p>
         </div>
 
