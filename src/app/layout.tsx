@@ -4,7 +4,7 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
-  title: 'Career Bridge — Platform Pengembangan Kesiapan Karier Mahasiswa Teknik & Energi',
+  title: 'Career Bridge: Platform Pengembangan Kesiapan Karier Mahasiswa Teknik & Energi',
   description:
     'Layanan pengembangan kesiapan karier berbasis teknologi dan pendampingan profesional terstruktur (4-week cohort) untuk mahasiswa teknik, energi, dan ketenagalistrikan.',
   keywords: [

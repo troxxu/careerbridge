@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DIAGNOSTIC_QUESTIONS } from '@/lib/mock-data';
 import { calculateCRS, PILLARS_CONFIG } from '@/lib/scoring';
 import { DiagnosticAnswer, CRSAssessmentResult, PillarKey } from '@/types';
@@ -25,6 +25,25 @@ export function DiagnosticForm() {
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [result, setResult] = useState<CRSAssessmentResult | null>(null);
 
+  // Restore answers from localStorage on client load
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('cb_diag_answers');
+      if (saved) {
+        setAnswers(JSON.parse(saved));
+      }
+    } catch (e) {}
+  }, []);
+
+  // Save answers to localStorage
+  useEffect(() => {
+    if (Object.keys(answers).length > 0) {
+      try {
+        localStorage.setItem('cb_diag_answers', JSON.stringify(answers));
+      } catch (e) {}
+    }
+  }, [answers]);
+
   const currentPillarKey = PILLAR_KEYS[currentStep];
   const currentPillarConfig = PILLARS_CONFIG[currentPillarKey];
 
@@ -43,10 +62,6 @@ export function DiagnosticForm() {
       [questionId]: score,
     }));
   };
-
-  const isCurrentPillarComplete = currentQuestions.every(
-    (q) => answers[q.id] !== undefined
-  );
 
   const handleNextStep = () => {
     if (currentStep < PILLAR_KEYS.length - 1) {
@@ -68,7 +83,7 @@ export function DiagnosticForm() {
     const formattedAnswers: DiagnosticAnswer[] = DIAGNOSTIC_QUESTIONS.map((q) => ({
       questionId: q.id,
       pillar: q.pillar,
-      score: answers[q.id] || 3, // fallback 3 if somehow missed
+      score: answers[q.id] || 3,
     }));
 
     const calculated = calculateCRS(formattedAnswers);
@@ -81,9 +96,7 @@ export function DiagnosticForm() {
         spread: 70,
         origin: { y: 0.6 },
       });
-    } catch (e) {
-      // safe fallback
-    }
+    } catch (e) {}
 
     window.scrollTo({ top: 100, behavior: 'smooth' });
   };
@@ -112,6 +125,9 @@ export function DiagnosticForm() {
     setResult(null);
     setAnswers({});
     setCurrentStep(0);
+    try {
+      localStorage.removeItem('cb_diag_answers');
+    } catch (e) {}
     window.scrollTo({ top: 100, behavior: 'smooth' });
   };
 
@@ -120,11 +136,11 @@ export function DiagnosticForm() {
   }
 
   const likertOptions = [
-    { value: 1, label: '1 - Sangat Tidak Setuju / Kurang', short: '1' },
-    { value: 2, label: '2 - Tidak Setuju / Rendah', short: '2' },
-    { value: 3, label: '3 - Cukup / Ragu-ragu', short: '3' },
-    { value: 4, label: '4 - Setuju / Baik', short: '4' },
-    { value: 5, label: '5 - Sangat Setuju / Mahir', short: '5' },
+    { value: 1, label: '1: Sangat Tidak Setuju / Kurang', short: '1' },
+    { value: 2, label: '2: Tidak Setuju / Rendah', short: '2' },
+    { value: 3, label: '3: Cukup / Ragu-ragu', short: '3' },
+    { value: 4, label: '4: Setuju / Baik', short: '4' },
+    { value: 5, label: '5: Sangat Setuju / Mahir', short: '5' },
   ];
 
   return (
@@ -187,7 +203,7 @@ export function DiagnosticForm() {
               <button
                 key={key}
                 onClick={() => setCurrentStep(idx)}
-                className={`py-2 px-1 text-center rounded-lg text-[10px] sm:text-xs font-bold transition-all truncate ${
+                className={`py-2 px-1 text-center rounded-xl text-[10px] sm:text-xs font-bold transition-all truncate ${
                   isCurrent
                     ? 'bg-brand-navy text-white shadow-sm'
                     : isDone
@@ -203,7 +219,7 @@ export function DiagnosticForm() {
       </div>
 
       {/* 5 Questions for the active pillar */}
-      <div className="space-y-8 pt-2">
+      <div className="space-y-6 pt-2">
         {currentQuestions.map((q, idx) => {
           const selectedValue = answers[q.id];
 
@@ -242,7 +258,7 @@ export function DiagnosticForm() {
                       key={opt.value}
                       type="button"
                       onClick={() => handleSelectScore(q.id, opt.value)}
-                      className={`p-3 rounded-xl border text-left sm:text-center transition-all flex sm:flex-col items-center sm:justify-center justify-between gap-1 ${
+                      className={`p-3 rounded-xl border text-left sm:text-center transition-all flex sm:flex-col items-center sm:justify-center justify-between gap-1 min-h-[44px] ${
                         isSelected
                           ? 'border-brand-blue bg-blue-600 text-white font-bold shadow-md scale-[1.02]'
                           : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
@@ -275,7 +291,7 @@ export function DiagnosticForm() {
           variant="outline"
           onClick={handlePrevStep}
           disabled={currentStep === 0}
-          className="text-xs font-bold"
+          className="text-xs font-bold rounded-xl h-11"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Pilar Sebelumnya
@@ -286,7 +302,7 @@ export function DiagnosticForm() {
             <Button
               onClick={handleSubmit}
               disabled={answeredCount < totalQuestions}
-              className="bg-brand-emerald hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-md"
+              className="bg-brand-emerald hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-md rounded-xl h-11"
             >
               Hitung Skor CRS Sekarang
               <CheckCircle className="ml-2 h-4 w-4" />
@@ -294,7 +310,7 @@ export function DiagnosticForm() {
           ) : (
             <Button
               onClick={handleNextStep}
-              className="bg-brand-blue hover:bg-blue-700 text-white font-bold text-xs sm:text-sm shadow-md"
+              className="bg-brand-blue hover:bg-blue-700 text-white font-bold text-xs sm:text-sm shadow-md rounded-xl h-11"
             >
               Pilar Berikutnya
               <ArrowRight className="ml-2 h-4 w-4" />

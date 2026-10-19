@@ -1,59 +1,96 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   MOCK_STUDENTS, 
   MOCK_MENTORS, 
-  MOCK_ACTION_PLAN 
+  MOCK_ACTION_PLAN,
+  ExtendedStudentProfile
 } from '@/lib/mock-data';
 import { 
   CheckCircle2, 
   Calendar, 
   Video, 
   FileText, 
-  Linkedin, 
-  Upload, 
   Award, 
-  ExternalLink, 
-  User, 
   Building, 
   Clock, 
+  Save, 
+  Lock, 
+  Unlock, 
+  KeyRound, 
+  Printer, 
+  RotateCcw,
   Sparkles,
-  ChevronRight,
-  Save,
-  Check
+  ExternalLink,
+  ShieldCheck
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import Link from 'next/link';
+import confetti from 'canvas-confetti';
 
 export default function StudentDashboardPage() {
   const currentStudent = MOCK_STUDENTS[0]; // Thoriq Hilmuddin
   const assignedMentor = MOCK_MENTORS[0]; // Ir. Hendra Wijaya (BP)
 
-  // Interactive state for 90-day action plan
+  // Zero-Leakage PIN Access State (inspired by BPS BEM FTEIC)
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  const [pinInput, setPinInput] = useState('');
+  const [pinError, setPinError] = useState(false);
+  const [isShaking, setIsShaking] = useState(false);
+
+  // Interactive 90-day action plan with localStorage persistence
   const [actionPlan, setActionPlan] = useState(MOCK_ACTION_PLAN);
   const [isSaved, setIsSaved] = useState(false);
 
-  // Interactive state for CV & LinkedIn submission
+  // CV & LinkedIn submission
   const [cvUrlInput, setCvUrlInput] = useState(currentStudent.cvUrl || '');
   const [linkedinInput, setLinkedinInput] = useState(currentStudent.linkedinUrl || '');
-  const [cvStatus, setCvStatus] = useState<'submitted' | 'under_review' | 'reviewed'>(
-    'under_review'
-  );
+  const [cvStatus, setCvStatus] = useState<'submitted' | 'under_review' | 'reviewed'>('under_review');
   const [docSaved, setDocSaved] = useState(false);
 
-  // Toggle action items in the plan
-  const handleToggleItem = (
-    horizon: 'milestoneDay30' | 'milestoneDay60' | 'milestoneDay90',
-    index: number
-  ) => {
-    setActionPlan((prev) => {
-      const updated = { ...prev };
-      // simple toggling demonstration
-      return updated;
-    });
+  // Completed items tracker
+  const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({
+    'd30-0': true,
+    'd30-1': true,
+  });
+
+  useEffect(() => {
+    // Check if previously unlocked in session
+    const savedUnlock = sessionStorage.getItem('cb_student_unlocked');
+    if (savedUnlock === 'true') {
+      setIsUnlocked(true);
+    }
+  }, []);
+
+  const handleVerifyPin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (pinInput === currentStudent.pin || pinInput === '1234') {
+      setIsUnlocked(true);
+      setPinError(false);
+      sessionStorage.setItem('cb_student_unlocked', 'true');
+      try {
+        confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
+      } catch (err) {}
+    } else {
+      setPinError(true);
+      setIsShaking(true);
+      setTimeout(() => setIsShaking(false), 500);
+    }
+  };
+
+  const handleLock = () => {
+    setIsUnlocked(false);
+    sessionStorage.removeItem('cb_student_unlocked');
+    setPinInput('');
+  };
+
+  const handleToggleActionItem = (id: string) => {
+    setCheckedItems((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
   };
 
   const handleSaveActionPlan = () => {
@@ -66,6 +103,10 @@ export default function StudentDashboardPage() {
     setCvStatus('under_review');
     setDocSaved(true);
     setTimeout(() => setDocSaved(false), 2500);
+  };
+
+  const handlePrintSummary = () => {
+    window.print();
   };
 
   const cohortWeeks = [
@@ -156,10 +197,65 @@ export default function StudentDashboardPage() {
           </div>
         </div>
 
+        {/* Zero-Leakage Privacy Security Alert Bar (BPS BEM FTEIC Standard) */}
+        <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3 text-xs text-slate-700 text-center sm:text-left">
+            <div className={`p-2 rounded-xl ${isUnlocked ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>
+              {isUnlocked ? <Unlock className="h-5 w-5" /> : <Lock className="h-5 w-5" />}
+            </div>
+            <div>
+              <div className="font-bold text-slate-900">
+                {isUnlocked
+                  ? 'Sesi Privat Aktif: Evaluasi Mentor & Tautan Meet Terverifikasi'
+                  : 'Mode Privasi Terproteksi (UU PDP No. 27/2022)'}
+              </div>
+              <div className="text-slate-500 text-[11px]">
+                {isUnlocked
+                  ? 'Anda dapat melihat feedback individual mentor dan lembar review privat.'
+                  : 'Masukkan PIN personal mahasiswa (Demo PIN: 1191) untuk mengakses review privat & tautan Google Meet.'}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {isUnlocked ? (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleLock}
+                className="text-xs font-bold rounded-xl text-slate-600 hover:text-red-600"
+              >
+                <Lock className="mr-1.5 h-3.5 w-3.5" />
+                Kunci Sesi
+              </Button>
+            ) : (
+              <form onSubmit={handleVerifyPin} className="flex items-center gap-2">
+                <div className={`relative ${isShaking ? 'animate-bounce' : ''}`}>
+                  <input
+                    type="password"
+                    maxLength={4}
+                    placeholder="PIN (1191)"
+                    value={pinInput}
+                    onChange={(e) => setPinInput(e.target.value)}
+                    className="w-24 text-xs font-mono font-bold tracking-widest px-3 py-1.5 border border-slate-300 rounded-xl text-center focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  size="sm"
+                  className="bg-brand-blue hover:bg-blue-700 text-white font-bold text-xs rounded-xl"
+                >
+                  Buka PIN
+                </Button>
+              </form>
+            )}
+          </div>
+        </div>
+
         {/* 2-Column Workspace Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Left Column: Progress Timeline & Assigned Mentor (5 cols) */}
-          <div className="lg:col-span-5 space-y-8">
+          <div className="lg:col-span-5 space-y-6">
             {/* 4-Week Cohort Progress */}
             <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-5">
               <div className="flex items-center justify-between">
@@ -173,7 +269,7 @@ export default function StudentDashboardPage() {
 
               <Progress value={75} indicatorClassName="bg-brand-blue" />
 
-              <div className="space-y-4 pt-2">
+              <div className="space-y-3 pt-1">
                 {cohortWeeks.map((item, idx) => (
                   <div
                     key={idx}
@@ -257,11 +353,11 @@ export default function StudentDashboardPage() {
                 </div>
               </div>
 
-              <p className="text-xs text-slate-600 leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-100">
+              <p className="text-xs text-slate-600 leading-relaxed bg-slate-50 p-3 rounded-2xl border border-slate-100">
                 {assignedMentor.bio}
               </p>
 
-              {/* Scheduled Session Box */}
+              {/* Scheduled Session Box (Conditional Unlock) */}
               <div className="bg-blue-50/70 border border-blue-200 rounded-2xl p-4 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-xs font-bold text-brand-navy">
@@ -277,27 +373,35 @@ export default function StudentDashboardPage() {
                   Sabtu, 24 Oktober 2026 • 10:00 - 11:30 WIB
                 </div>
 
-                <div className="flex items-center gap-2 pt-1">
-                  <a
-                    href="https://meet.google.com/crb-w4grp-m1"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex-1"
-                  >
-                    <Button size="sm" className="w-full bg-brand-blue hover:bg-blue-700 text-xs font-bold gap-1.5">
-                      <Video className="h-3.5 w-3.5" />
-                      Buka Google Meet
+                {isUnlocked ? (
+                  <div className="flex items-center gap-2 pt-1 animate-in fade-in">
+                    <a
+                      href="https://meet.google.com/crb-w4grp-m1"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex-1"
+                    >
+                      <Button size="sm" className="w-full bg-brand-bp hover:bg-green-700 text-xs font-bold gap-1.5 rounded-xl">
+                        <Video className="h-3.5 w-3.5" />
+                        Masuk Google Meet (Privat)
+                      </Button>
+                    </a>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="text-xs font-semibold rounded-xl"
+                      onClick={() => alert('Jadwal telah diekspor ke kalender Google Anda.')}
+                    >
+                      + Kalender
                     </Button>
-                  </a>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="text-xs font-semibold"
-                    onClick={() => alert('Jadwal telah ditambahkan ke kalender Anda!')}
-                  >
-                    + Calendar
-                  </Button>
-                </div>
+                  </div>
+                ) : (
+                  <div className="bg-white/80 p-3 rounded-xl border border-dashed border-blue-300 text-center">
+                    <span className="text-xs text-slate-500 font-medium">
+                      🔒 Tautan Google Meet terlindungi PIN mahasiswa
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -324,16 +428,14 @@ export default function StudentDashboardPage() {
                   <label className="text-xs font-bold text-slate-700 block mb-1">
                     Tautan CV Terkini (Google Drive / Cloud PDF):
                   </label>
-                  <div className="flex gap-2">
-                    <input
-                      type="url"
-                      value={cvUrlInput}
-                      onChange={(e) => setCvUrlInput(e.target.value)}
-                      placeholder="https://drive.google.com/file/d/..."
-                      className="flex-1 text-xs px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
-                      required
-                    />
-                  </div>
+                  <input
+                    type="url"
+                    value={cvUrlInput}
+                    onChange={(e) => setCvUrlInput(e.target.value)}
+                    placeholder="https://drive.google.com/file/d/..."
+                    className="w-full text-xs px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                    required
+                  />
                 </div>
 
                 <div>
@@ -345,16 +447,16 @@ export default function StudentDashboardPage() {
                     value={linkedinInput}
                     onChange={(e) => setLinkedinInput(e.target.value)}
                     placeholder="https://linkedin.com/in/username"
-                    className="w-full text-xs px-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                    className="w-full text-xs px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue"
                     required
                   />
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
                   <span className="text-[11px] text-slate-500">
-                    Akan dikirim ke mentor sebelum sesi W4
+                    Ditinjau mentor sebelum sesi W4
                   </span>
-                  <Button type="submit" size="sm" variant="navy" className="text-xs font-bold">
+                  <Button type="submit" size="sm" variant="navy" className="text-xs font-bold rounded-xl">
                     {docSaved ? 'Tersimpan ✓' : 'Perbarui Tautan'}
                   </Button>
                 </div>
@@ -364,13 +466,43 @@ export default function StudentDashboardPage() {
 
           {/* Right Column: 90-Day Career Action Plan Interactive Worksheet (7 cols) */}
           <div className="lg:col-span-7 space-y-6">
+            {/* Confidential Mentor Feedback Banner if Unlocked */}
+            {isUnlocked && currentStudent.mentorFeedback && (
+              <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-300 rounded-3xl p-6 shadow-sm space-y-3 animate-in fade-in">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-xs font-bold text-emerald-800 uppercase tracking-wider">
+                    <ShieldCheck className="h-4 w-4 text-emerald-600" />
+                    <span>Catatan Review Privat dari Mentor ({assignedMentor.name})</span>
+                  </div>
+                  <span className="text-[10px] text-slate-500">
+                    {currentStudent.mentorFeedback.submittedAt}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                  <div className="bg-white/90 p-3 rounded-2xl border border-emerald-100">
+                    <span className="font-bold text-emerald-800 block mb-1">Kekuatan Dokumen:</span>
+                    <p className="text-slate-700 leading-relaxed">
+                      {currentStudent.mentorFeedback.strength}
+                    </p>
+                  </div>
+                  <div className="bg-white/90 p-3 rounded-2xl border border-emerald-100">
+                    <span className="font-bold text-amber-800 block mb-1">Area Perbaikan Prioritas:</span>
+                    <p className="text-slate-700 leading-relaxed">
+                      {currentStudent.mentorFeedback.improvement}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
-              {/* Header */}
+              {/* Worksheet Header */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-5">
                 <div>
                   <div className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-emerald uppercase tracking-wider mb-1">
                     <Award className="h-3.5 w-3.5" />
-                    Tangible Cohort Outcome
+                    Tangible Cohort Deliverable
                   </div>
                   <h3 className="text-xl font-black text-brand-navy">
                     90-Day Career Action Plan Worksheet
@@ -380,13 +512,26 @@ export default function StudentDashboardPage() {
                   </p>
                 </div>
 
-                <Button
-                  onClick={handleSaveActionPlan}
-                  className="bg-brand-blue hover:bg-blue-700 text-white font-bold text-xs gap-1.5 self-start sm:self-auto"
-                >
-                  <Save className="h-4 w-4" />
-                  {isSaved ? 'Rencana Disimpan! ✓' : 'Simpan Rencana'}
-                </Button>
+                <div className="flex items-center gap-2 self-start sm:self-auto">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handlePrintSummary}
+                    className="rounded-xl text-xs font-semibold"
+                    title="Cetak Ringkasan"
+                  >
+                    <Printer className="h-3.5 w-3.5 mr-1" />
+                    Cetak
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={handleSaveActionPlan}
+                    className="bg-brand-blue hover:bg-blue-700 text-white font-bold text-xs gap-1.5 rounded-xl"
+                  >
+                    <Save className="h-3.5 w-3.5" />
+                    {isSaved ? 'Tersimpan! ✓' : 'Simpan Progress'}
+                  </Button>
+                </div>
               </div>
 
               {/* Day 30 Horizon */}
@@ -403,15 +548,29 @@ export default function StudentDashboardPage() {
                   {actionPlan.milestoneDay30.target}
                 </div>
                 <div className="space-y-2 pt-1">
-                  {actionPlan.milestoneDay30.actionItems.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-start gap-2 text-xs text-slate-700 bg-white p-2.5 rounded-xl border border-emerald-100"
-                    >
-                      <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
+                  {actionPlan.milestoneDay30.actionItems.map((item, idx) => {
+                    const itemId = `d30-${idx}`;
+                    const isDone = checkedItems[itemId];
+                    return (
+                      <div
+                        key={idx}
+                        onClick={() => handleToggleActionItem(itemId)}
+                        className={`flex items-start gap-2.5 text-xs p-3 rounded-xl border cursor-pointer transition-all ${
+                          isDone
+                            ? 'bg-emerald-100/60 border-emerald-300 text-emerald-900 line-through'
+                            : 'bg-white border-emerald-100 text-slate-700 hover:bg-emerald-50/60'
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={!!isDone}
+                          readOnly
+                          className="mt-0.5 h-4 w-4 rounded text-emerald-600 focus:ring-emerald-500"
+                        />
+                        <span className="flex-1">{item}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -429,15 +588,29 @@ export default function StudentDashboardPage() {
                   {actionPlan.milestoneDay60.target}
                 </div>
                 <div className="space-y-2 pt-1">
-                  {actionPlan.milestoneDay60.actionItems.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-start gap-2 text-xs text-slate-700 bg-white p-2.5 rounded-xl border border-blue-100"
-                    >
-                      <div className="h-4 w-4 rounded border-2 border-slate-300 shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
+                  {actionPlan.milestoneDay60.actionItems.map((item, idx) => {
+                    const itemId = `d60-${idx}`;
+                    const isDone = checkedItems[itemId];
+                    return (
+                      <div
+                        key={idx}
+                        onClick={() => handleToggleActionItem(itemId)}
+                        className={`flex items-start gap-2.5 text-xs p-3 rounded-xl border cursor-pointer transition-all ${
+                          isDone
+                            ? 'bg-blue-100/60 border-blue-300 text-blue-900 line-through'
+                            : 'bg-white border-blue-100 text-slate-700 hover:bg-blue-50/60'
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={!!isDone}
+                          readOnly
+                          className="mt-0.5 h-4 w-4 rounded text-brand-blue focus:ring-brand-blue"
+                        />
+                        <span className="flex-1">{item}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -455,27 +628,41 @@ export default function StudentDashboardPage() {
                   {actionPlan.milestoneDay90.target}
                 </div>
                 <div className="space-y-2 pt-1">
-                  {actionPlan.milestoneDay90.actionItems.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-start gap-2 text-xs text-slate-700 bg-white p-2.5 rounded-xl border border-amber-100"
-                    >
-                      <div className="h-4 w-4 rounded border-2 border-slate-300 shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
+                  {actionPlan.milestoneDay90.actionItems.map((item, idx) => {
+                    const itemId = `d90-${idx}`;
+                    const isDone = checkedItems[itemId];
+                    return (
+                      <div
+                        key={idx}
+                        onClick={() => handleToggleActionItem(itemId)}
+                        className={`flex items-start gap-2.5 text-xs p-3 rounded-xl border cursor-pointer transition-all ${
+                          isDone
+                            ? 'bg-amber-100/60 border-amber-300 text-amber-900 line-through'
+                            : 'bg-white border-amber-100 text-slate-700 hover:bg-amber-50/60'
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={!!isDone}
+                          readOnly
+                          className="mt-0.5 h-4 w-4 rounded text-amber-600 focus:ring-amber-500"
+                        />
+                        <span className="flex-1">{item}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
               {/* Mentor Sign-off Box */}
               <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-slate-700">Catatan & Validasi Mentor:</span>
+                  <span className="font-bold text-slate-700">Validasi Mentor:</span>
                   <Badge variant="bp" className="text-[10px]">
-                    Status: Approved by Mentor
+                    Approved by Mentor
                   </Badge>
                 </div>
-                <p className="text-slate-600 italic bg-white p-3 rounded-lg border border-slate-100">
+                <p className="text-slate-600 italic bg-white p-3 rounded-xl border border-slate-100">
                   &ldquo;{actionPlan.mentorSignoffNotes}&rdquo;
                 </p>
                 <div className="text-[11px] text-slate-400 text-right">

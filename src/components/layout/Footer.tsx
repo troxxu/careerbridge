@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Compass, AlertTriangle, ShieldCheck, HeartHandshake, FileText, ExternalLink } from 'lucide-react';
+import { Compass, AlertTriangle, ShieldCheck, HeartHandshake } from 'lucide-react';
 
 export function Footer() {
   const teamMembers = [
@@ -16,7 +16,7 @@ export function Footer() {
       {/* MANDATORY LEGAL DISCLAIMER BANNER */}
       <div className="bg-slate-950 border-b border-slate-800 py-4 px-4">
         <div className="container max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-3 text-center md:text-left">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-500/10 text-amber-400">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-500/10 text-amber-400">
             <AlertTriangle className="h-5 w-5" />
           </div>
           <div className="text-xs leading-relaxed text-slate-300">
@@ -42,21 +42,21 @@ export function Footer() {
                 <span className="text-xl font-black text-white tracking-tight">
                   Career<span className="text-brand-blue-light">Bridge</span>
                 </span>
-                <span className="ml-2 rounded bg-emerald-900/60 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-bold text-emerald-400">
+                <span className="ml-2 rounded-md bg-emerald-900/60 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-bold text-emerald-400">
                   MVP 2026
                 </span>
               </div>
             </div>
             <p className="text-sm text-slate-400 leading-relaxed max-w-md">
-              Platform pengembangan kesiapan karier & professional access berbasis teknologi
-              untuk mahasiswa teknik, energi, dan ketenagalistrikan. Menjembatani kesenjangan akademik dengan standar industri global secara terstruktur dan terukur.
+              Platform pengembangan kesiapan karier dan professional access berbasis teknologi
+              untuk mahasiswa teknik, energi, dan ketenagalistrikan. Menjembatani kesenjangan kurikulum akademik dengan standar industri global secara terstruktur dan terukur.
             </p>
             <div className="flex flex-wrap items-center gap-2 pt-1">
-              <span className="inline-flex items-center gap-1.5 text-xs text-slate-400 bg-slate-800/80 px-3 py-1 rounded-md border border-slate-700">
+              <span className="inline-flex items-center gap-1.5 text-xs text-slate-400 bg-slate-800/80 px-3 py-1 rounded-lg border border-slate-700">
                 <ShieldCheck className="h-3.5 w-3.5 text-brand-bp-light" />
                 UU PDP No. 27/2022 Compliant
               </span>
-              <span className="inline-flex items-center gap-1.5 text-xs text-slate-400 bg-slate-800/80 px-3 py-1 rounded-md border border-slate-700">
+              <span className="inline-flex items-center gap-1.5 text-xs text-slate-400 bg-slate-800/80 px-3 py-1 rounded-lg border border-slate-700">
                 <HeartHandshake className="h-3.5 w-3.5 text-blue-400" />
                 Tested with SPE ITS SC Network
               </span>
@@ -66,12 +66,12 @@ export function Footer() {
           {/* Quick Nav */}
           <div>
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              Navigasi Cepat
+              Navigasi Utama
             </h4>
             <ul className="space-y-2 text-sm text-slate-400">
               <li>
                 <Link href="/" className="hover:text-white transition-colors">
-                  Beranda Utama
+                  Beranda
                 </Link>
               </li>
               <li>
@@ -136,7 +136,7 @@ export function Footer() {
             {teamMembers.map((m) => (
               <div
                 key={m.nrp}
-                className="bg-slate-800/50 border border-slate-800 rounded-lg p-2.5 text-xs hover:border-slate-700 transition-colors"
+                className="bg-slate-800/50 border border-slate-800 rounded-xl p-3 text-xs hover:border-slate-700 transition-colors"
               >
                 <div className="font-semibold text-slate-200 truncate" title={m.name}>
                   {m.name}
@@ -151,10 +151,10 @@ export function Footer() {
         {/* Bottom copyright */}
         <div className="border-t border-slate-800/80 pt-6 mt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
           <div>
-            &copy; {new Date().getFullYear()} Career Bridge — Group 7 Kewirausahaan Berbasis Teknologi ITS.
+            &copy; {new Date().getFullYear()} Career Bridge: Group 7 Kewirausahaan Berbasis Teknologi ITS.
           </div>
           <div className="flex items-center gap-4">
-            <span>Production Ready Blueprint</span>
+            <span>Production Ready Architecture</span>
             <span>•</span>
             <span>Next.js 14 App Router</span>
           </div>

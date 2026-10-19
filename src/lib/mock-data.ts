@@ -6,6 +6,17 @@ import {
   NinetyDayActionPlan,
 } from '@/types';
 
+export interface ExtendedStudentProfile extends StudentProfile {
+  pin: string;
+  mentorFeedback?: {
+    strength: string;
+    improvement: string;
+    cvRating: number;
+    interviewRating: number;
+    submittedAt: string;
+  };
+}
+
 export const MOCK_MENTORS: MentorProfile[] = [
   {
     id: 'm1',
@@ -20,7 +31,7 @@ export const MOCK_MENTORS: MentorProfile[] = [
     coachingStyle: 'technical_review',
     maxCapacity: 5,
     avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80',
-    bio: 'Alumni Teknik Elektro ITS (Angkatan 2014). Berpengalaman 8+ tahun dalam desain integrasi subsea power distribution proyek Tangguh LNG Train 3.',
+    bio: 'Alumni Teknik Elektro ITS (Angkatan 2014). Berpengalaman 8+ tahun dalam integrasi subsea power distribution proyek Tangguh LNG Train 3 dan standardisasi API RP 14F.',
     linkedinUrl: 'https://linkedin.com/in/hendra-wijaya-sample',
   },
   {
@@ -36,7 +47,7 @@ export const MOCK_MENTORS: MentorProfile[] = [
     coachingStyle: 'career_roadmap',
     maxCapacity: 5,
     avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80',
-    bio: 'Alumni Teknik Elektro ITS (Angkatan 2016). Fokus pada penetrasi PLTS Atap, Battery Energy Storage System (BESS), dan stabilitas sistem interkoneksi Jamali.',
+    bio: 'Alumni Teknik Elektro ITS (Angkatan 2016). Membidangi penetrasi PLTS Atap, integrasi Battery Energy Storage System (BESS), dan stabilitas interkoneksi Jamali.',
     linkedinUrl: 'https://linkedin.com/in/siti-rahmawati-sample',
   },
   {
@@ -52,7 +63,7 @@ export const MOCK_MENTORS: MentorProfile[] = [
     coachingStyle: 'balanced',
     maxCapacity: 5,
     avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80',
-    bio: 'Spesialis DCS, PLC & SCADA industri petrokimia dan pembangkitan. Pembimbing aktif delegasi kompetisi otomasi nasional.',
+    bio: 'Spesialis DCS, PLC & SCADA industri pembangkitan dan petrokimia. Pembina aktif tim delegasi kompetisi otomasi industri nasional.',
     linkedinUrl: 'https://linkedin.com/in/budi-santoso-sample',
   },
   {
@@ -89,11 +100,12 @@ export const MOCK_MENTORS: MentorProfile[] = [
   },
 ];
 
-export const MOCK_STUDENTS: StudentProfile[] = [
+export const MOCK_STUDENTS: ExtendedStudentProfile[] = [
   {
     id: 's1',
     name: 'Thoriq Hilmuddin',
     nrp: '5022231191',
+    pin: '1191',
     email: 'thoriq@student.its.ac.id',
     university: 'Institut Teknologi Sepuluh Nopember',
     department: 'Teknik Elektro (Sistem Tenaga Listrik)',
@@ -107,11 +119,19 @@ export const MOCK_STUDENTS: StudentProfile[] = [
     linkedinUrl: 'https://linkedin.com/in/thoriq-hilmuddin',
     cvUrl: 'https://careerbridge.id/uploads/cv_thoriq_star.pdf',
     cvStatus: 'under_review',
+    mentorFeedback: {
+      strength: 'Pemahaman teori sistem tenaga, simulasi ETAP, dan dasar API RP 14F sangat baik.',
+      improvement: 'Cantumkan angka efisiensi kuantitatif pada bagian pengalaman proyek laboratorium.',
+      cvRating: 4,
+      interviewRating: 4,
+      submittedAt: '24 Oktober 2026',
+    },
   },
   {
     id: 's2',
     name: 'Maheswara Yogha Putra Al Ardha',
     nrp: '5022231188',
+    pin: '1188',
     email: 'yogha@student.its.ac.id',
     university: 'Institut Teknologi Sepuluh Nopember',
     department: 'Teknik Elektro (Sistem Tenaga & Energi)',
@@ -125,11 +145,19 @@ export const MOCK_STUDENTS: StudentProfile[] = [
     linkedinUrl: 'https://linkedin.com/in/maheswara-yogha',
     cvUrl: 'https://careerbridge.id/uploads/cv_yogha.pdf',
     cvStatus: 'reviewed',
+    mentorFeedback: {
+      strength: 'Pemetaan target karier di sektor EBT sangat jelas, pemahaman regulasi RUPTL memadai.',
+      improvement: 'Asah jawaban behavioural interview untuk studi kasus resolusi konflik tim.',
+      cvRating: 5,
+      interviewRating: 4,
+      submittedAt: '24 Oktober 2026',
+    },
   },
   {
     id: 's3',
     name: 'Ardyan Bagas Trihutama',
     nrp: '5022231171',
+    pin: '1171',
     email: 'ardyan@student.its.ac.id',
     university: 'Institut Teknologi Sepuluh Nopember',
     department: 'Teknik Elektro (Telekomunikasi & Jaringan)',
@@ -148,6 +176,7 @@ export const MOCK_STUDENTS: StudentProfile[] = [
     id: 's4',
     name: 'M. Aqila Daffa Arya Bimantara',
     nrp: '5022231187',
+    pin: '1187',
     email: 'aqila@student.its.ac.id',
     university: 'Institut Teknologi Sepuluh Nopember',
     department: 'Teknik Elektro (Otomasi Industri)',
@@ -164,6 +193,7 @@ export const MOCK_STUDENTS: StudentProfile[] = [
     id: 's5',
     name: 'Rifky Ananda Riwendra',
     nrp: '5022231184',
+    pin: '1184',
     email: 'rifky@student.its.ac.id',
     university: 'Institut Teknologi Sepuluh Nopember',
     department: 'Teknik Elektro (Manajemen Energi)',
@@ -180,6 +210,7 @@ export const MOCK_STUDENTS: StudentProfile[] = [
     id: 's6',
     name: 'Aulia Rahma Dewanti',
     nrp: '5022211023',
+    pin: '1023',
     email: 'aulia.rahma@student.its.ac.id',
     university: 'Institut Teknologi Sepuluh Nopember',
     department: 'Teknik Elektro (Kelistrikan Lepas Pantai)',
@@ -196,6 +227,7 @@ export const MOCK_STUDENTS: StudentProfile[] = [
     id: 's7',
     name: 'Farhan Maulana Hakim',
     nrp: '5022211099',
+    pin: '1099',
     email: 'farhan.m@student.its.ac.id',
     university: 'Institut Teknologi Sepuluh Nopember',
     department: 'Teknik Elektro (Energi Terbarukan)',
@@ -216,14 +248,14 @@ export const DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
     id: 'q1',
     pillar: 'clarity',
     pillarLabel: 'Career Clarity',
-    questionText: 'Saya memiliki pemahaman spesifik mengenai deskripsi pekerjaan dan tanggung jawab harian dari posisi target saya di industri teknik/energi.',
+    questionText: 'Saya memiliki pemahaman spesifik mengenai deskripsi pekerjaan dan tanggung jawab harian dari posisi target saya di industri teknik atau energi.',
     helpText: 'Misal: Mengetahui perbedaan peran Electrical Engineer di EPC, Operator Migas, atau Pembangkit PLN.',
   },
   {
     id: 'q2',
     pillar: 'clarity',
     pillarLabel: 'Career Clarity',
-    questionText: 'Saya mengetahui jenjang karier (career ladder) dan tahapan promosi dalam 3-5 tahun pertama di sektor industri pilihan saya.',
+    questionText: 'Saya mengetahui jenjang karier (career ladder) dan tahapan promosi dalam 3 hingga 5 tahun pertama di sektor industri pilihan saya.',
     helpText: 'Misal: Dari Graduate Trainee menuju Junior Engineer, Lead Specialist, hingga Project Manager.',
   },
   {
@@ -244,7 +276,7 @@ export const DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
     id: 'q5',
     pillar: 'clarity',
     pillarLabel: 'Career Clarity',
-    questionText: 'Saya memahami kriteria seleksi program Management Trainee (MT) vs Direct Hire vs Magang di industri teknik.',
+    questionText: 'Saya memahami kriteria seleksi program Management Trainee (MT) dibanding Direct Hire atau Magang di industri teknik.',
     helpText: 'Termasuk tahapan FGD, online assessment, user interview, dan medical check-up.',
   },
 
@@ -260,7 +292,7 @@ export const DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
     id: 'q7',
     pillar: 'competency',
     pillarLabel: 'Skill Gap Awareness',
-    questionText: 'Saya mengetahui standar kode rekayasa internasional yang berlaku di industri (e.g., IEEE, IEC, ASME, API, PUIL).',
+    questionText: 'Saya mengetahui standar kode rekayasa internasional yang berlaku di industri (IEEE, IEC, ASME, API, PUIL).',
     helpText: 'Standar regulasi desain kelistrikan dan proteksi sistem daya.',
   },
   {
@@ -274,7 +306,7 @@ export const DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
     id: 'q9',
     pillar: 'competency',
     pillarLabel: 'Skill Gap Awareness',
-    questionText: 'Saya telah memetakan sertifikasi profesi yang bernilai tinggi untuk posisi target saya (e.g., SKA/SKK, K3 Umum, CSWA, TOEIC).',
+    questionText: 'Saya telah memetakan sertifikasi profesi yang bernilai tinggi untuk posisi target saya (SKA/SKK, K3 Umum, CSWA, TOEIC).',
     helpText: 'Memiliki jadwal jelas kapan akan mengambil sertifikasi sebelum wisuda.',
   },
   {
@@ -305,7 +337,7 @@ export const DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
     pillar: 'branding',
     pillarLabel: 'CV & Branding',
     questionText: 'Profil LinkedIn saya memiliki status All-Star dengan headline deskriptif, ringkasan terarah, dan foto profesional.',
-    helpText: 'Headline tidak sekadar "Student at ITS" melainkan "Electrical Engineering Student | Power Systems & Subsea Enthusiast".',
+    helpText: 'Headline deskriptif: "Electrical Engineering Student | Power Systems & Subsea Enthusiast".',
   },
   {
     id: 'q14',
@@ -348,7 +380,7 @@ export const DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
     id: 'q19',
     pillar: 'interview',
     pillarLabel: 'Interview Prep',
-    questionText: 'Saya telah menyiapkan minimal 3 pertanyaan strategis yang berbobot untuk ditanyakan kepada user/interviewer di akhir sesi wawancara.',
+    questionText: 'Saya telah menyiapkan minimal 3 pertanyaan strategis yang berbobot untuk ditanyakan kepada user atau interviewer di akhir sesi wawancara.',
     helpText: 'Pertanyaan mengenai roadmap teknologi perusahaan, tantangan proyek, dan budaya tim.',
   },
   {
@@ -378,7 +410,7 @@ export const DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
     id: 'q23',
     pillar: 'networking',
     pillarLabel: 'Networking',
-    questionText: 'Saya aktif terlibat dalam organisasi profesional mahasiswa (misal: IEEE Student Branch, SPE ITS SC, IATMI, PII).',
+    questionText: 'Saya aktif terlibat dalam organisasi profesional mahasiswa (IEEE Student Branch, SPE ITS SC, IATMI, PII).',
     helpText: 'Memanfaatkan event, webinar, dan field trip industri untuk memperluas koneksi.',
   },
   {
@@ -398,7 +430,7 @@ export const DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
 ];
 
 export const MOCK_B2B_METRICS: B2BInstitutionalMetrics = {
-  cohortName: 'Batch 1 — Pilot FTEIC Engineering & Energy',
+  cohortName: 'Batch 1: Pilot FTEIC Engineering & Energy',
   department: 'Departemen Teknik Elektro & Energi ITS (Mitra Himatektro)',
   totalEnrolled: 42,
   preTestAverageCRS: 53.8,

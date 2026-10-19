@@ -3,7 +3,7 @@ import { DiagnosticForm } from '@/components/diagnostic/DiagnosticForm';
 import { Compass, ShieldCheck, Award, Sparkles, CheckCircle2 } from 'lucide-react';
 
 export const metadata = {
-  title: 'Career Diagnostic Test (Free) — Career Bridge',
+  title: 'Career Diagnostic Test (Free) : Career Bridge',
   description:
     'Asesmen kesiapan karier mandiri 25 butir soal untuk mengukur Career Readiness Score (CRS) pada 5 pilar kompetensi mahasiswa teknik dan energi.',
 };
