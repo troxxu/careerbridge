@@ -164,11 +164,11 @@ export function DiagnosticForm() {
               <div className="font-bold text-slate-900 flex items-center gap-2">
                 <span>{user.name}</span>
                 <span className="text-[10px] font-semibold bg-emerald-200/60 text-emerald-800 px-2 py-0.5 rounded-full">
-                  Peserta Terverifikasi ({user.authProvider === 'google' ? 'Google' : 'Email'})
+                  Akun Terverifikasi
                 </span>
               </div>
               <div className="text-[11px] text-slate-500 font-normal">
-                NRP {user.nrp || '5007201191'} • {user.department || 'Teknik Elektro ITS'} • Target: {user.targetIndustry || 'Oil & Gas'}
+                {user.nrp ? `NRP ${user.nrp} • ` : ''}{user.department || 'Mahasiswa Teknik'} • Target: {user.targetIndustry || 'Industri Energi & Keteknikan'}
               </div>
             </div>
           </div>

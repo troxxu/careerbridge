@@ -17,6 +17,12 @@ export interface AuthUser {
   authProvider?: 'google' | 'credentials';
 }
 
+export interface StoredUserAccount extends AuthUser {
+  password: string;
+  createdAt: string;
+  resetToken?: string;
+}
+
 export type PillarKey = 'clarity' | 'competency' | 'branding' | 'interview' | 'networking';
 
 export interface DiagnosticQuestion {

@@ -32,9 +32,27 @@ import confetti from 'canvas-confetti';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import { DotPattern } from '@/components/magicui/dot-pattern';
 import { NumberTicker } from '@/components/magicui/number-ticker';
+import { useAuth } from '@/context/AuthContext';
 
 export default function StudentDashboardPage() {
-  const currentStudent = MOCK_STUDENTS[0]; // Thoriq Hilmuddin
+  const { user } = useAuth();
+
+  // Dynamically resolve student profile from active authenticated user
+  const studentPin = user?.nrp ? user.nrp.slice(-4) : '1234';
+  const currentStudent = {
+    ...MOCK_STUDENTS[0],
+    id: user?.id || 'std-active',
+    name: user?.name || 'Mahasiswa Peserta',
+    email: user?.email || 'mahasiswa@student.its.ac.id',
+    department: user?.department || 'Teknik Elektro',
+    university: user?.university || 'Institut Teknologi Sepuluh Nopember',
+    nrp: user?.nrp || '5007221001',
+    targetIndustry: user?.targetIndustry || 'Offshore Energy & Power Systems',
+    crsScore: user?.crsScore ?? 68,
+    crsTier: user?.crsTier ?? 'Emerging Readiness',
+    pin: studentPin,
+  };
+
   const assignedMentor = MOCK_MENTORS[0]; // Ir. Hendra Wijaya (BP)
 
   // Zero-Leakage PIN Access State (inspired by BPS BEM FTEIC)
@@ -226,7 +244,7 @@ export default function StudentDashboardPage() {
               <div className="text-slate-500 text-[11px] font-normal">
                 {isUnlocked
                   ? 'Anda dapat melihat feedback individual mentor dan lembar review privat.'
-                  : 'Masukkan PIN personal mahasiswa (Demo PIN: 1191) untuk mengakses review privat & tautan Google Meet.'}
+                  : `Masukkan PIN personal mahasiswa (PIN: ${studentPin}) untuk mengakses review privat & tautan Google Meet.`}
               </div>
             </div>
           </div>
@@ -248,7 +266,7 @@ export default function StudentDashboardPage() {
                   <input
                     type="password"
                     maxLength={4}
-                    placeholder="PIN (1191)"
+                    placeholder={`PIN (${studentPin})`}
                     value={pinInput}
                     onChange={(e) => setPinInput(e.target.value)}
                     className="w-24 text-xs font-mono font-bold tracking-widest px-3 py-1.5 border border-slate-300 rounded-xl text-center focus:outline-none focus:ring-2 focus:ring-brand-blue"

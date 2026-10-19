@@ -103,10 +103,10 @@ export const MOCK_MENTORS: MentorProfile[] = [
 export const MOCK_STUDENTS: ExtendedStudentProfile[] = [
   {
     id: 's1',
-    name: 'Thoriq Hilmuddin',
-    nrp: '5022231191',
-    pin: '1191',
-    email: 'thoriq@student.its.ac.id',
+    name: 'Ahmad Fauzan Pratama',
+    nrp: '5022211045',
+    pin: '1045',
+    email: 'fauzan.pratama@student.its.ac.id',
     university: 'Institut Teknologi Sepuluh Nopember',
     department: 'Teknik Elektro (Sistem Tenaga Listrik)',
     semester: 6,
@@ -116,8 +116,8 @@ export const MOCK_STUDENTS: ExtendedStudentProfile[] = [
     availabilitySlots: ['sat_morning', 'sun_evening'],
     formatPreference: 'technical_review',
     crsScore: 68,
-    linkedinUrl: 'https://linkedin.com/in/thoriq-hilmuddin',
-    cvUrl: 'https://careerbridge.id/uploads/cv_thoriq_star.pdf',
+    linkedinUrl: 'https://linkedin.com/in/fauzan-pratama-sample',
+    cvUrl: 'https://careerbridge.id/uploads/cv_sample_star.pdf',
     cvStatus: 'under_review',
     mentorFeedback: {
       strength: 'Pemahaman teori sistem tenaga, simulasi ETAP, dan dasar API RP 14F sangat baik.',
