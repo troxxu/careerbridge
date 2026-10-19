@@ -361,7 +361,7 @@ export default function LoginPage() {
 
             {/* Academic Credential Note */}
             <div className="p-4 rounded-2xl bg-white border border-slate-200/80 text-xs text-slate-500 space-y-1">
-              <div className="font-semibold text-slate-700">Platform Simulasi Terbuka</div>
+              <div className="font-semibold text-slate-700">Inisiatif Platform Nyata</div>
               <p>
                 Inisiatif perancangan model bisnis Kelompok 7 Kewirausahaan Berbasis Teknologi, Departemen Teknik Elektro, FTEIC ITS Surabaya.
               </p>

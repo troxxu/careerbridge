@@ -109,7 +109,7 @@ export function Navbar() {
           <div className="relative group">
             <button className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-xl border border-slate-200 transition-colors">
               <Layers className="h-3.5 w-3.5 text-slate-700" />
-              <span>Portal Demo</span>
+              <span>Pilih Portal</span>
             </button>
             <div className="absolute right-0 top-full mt-1.5 w-56 rounded-2xl border border-slate-200 bg-white p-2 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150">
               <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400">
@@ -241,7 +241,7 @@ export function Navbar() {
 
           <div className="border-t border-slate-100 pt-3">
             <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-              Workspace Demo
+              Navigasi Portal
             </div>
             <div className="grid grid-cols-1 gap-1.5">
               {dashboardLinks.map((d) => (

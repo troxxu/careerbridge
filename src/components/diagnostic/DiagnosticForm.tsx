@@ -109,26 +109,6 @@ export function DiagnosticForm() {
     window.scrollTo({ top: 100, behavior: 'smooth' });
   };
 
-  // Demo helper: Quick fill with realistic responses
-  const handleQuickFill = (profileType: 'balanced' | 'high' | 'exploration') => {
-    const demoAnswers: Record<string, number> = {};
-    DIAGNOSTIC_QUESTIONS.forEach((q, idx) => {
-      if (profileType === 'high') {
-        demoAnswers[q.id] = (idx % 2 === 0) ? 5 : 4;
-      } else if (profileType === 'exploration') {
-        demoAnswers[q.id] = (idx % 3 === 0) ? 1 : 2;
-      } else {
-        // Balanced ~68 CRS (Typical Semester 6 student)
-        if (q.pillar === 'clarity') demoAnswers[q.id] = 4;
-        else if (q.pillar === 'competency') demoAnswers[q.id] = 3;
-        else if (q.pillar === 'branding') demoAnswers[q.id] = 3;
-        else if (q.pillar === 'interview') demoAnswers[q.id] = 3;
-        else demoAnswers[q.id] = 4;
-      }
-    });
-    setAnswers(demoAnswers);
-  };
-
   const handleRetake = () => {
     setResult(null);
     setAnswers({});
@@ -178,7 +158,7 @@ export function DiagnosticForm() {
         </div>
       )}
 
-      {/* Top Header & Demo Quick Fill Toolbar */}
+      {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-6">
         <div>
           <div className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 uppercase tracking-wider mb-1">
@@ -193,23 +173,10 @@ export function DiagnosticForm() {
           </p>
         </div>
 
-        {/* Demo Buttons */}
-        <div className="flex items-center gap-1.5 bg-slate-50 p-1.5 rounded-xl border border-slate-200 self-start sm:self-auto">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2">
-            Demo Isi Cepat:
+        <div className="flex items-center gap-2 self-start sm:self-auto">
+          <span className="text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl shadow-xs">
+            Tahap {currentStep + 1} dari 5
           </span>
-          <button
-            onClick={() => handleQuickFill('balanced')}
-            className="text-[11px] font-semibold text-slate-700 hover:text-brand-blue bg-white hover:bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200 shadow-xs"
-          >
-            Emerging (~68)
-          </button>
-          <button
-            onClick={() => handleQuickFill('high')}
-            className="text-[11px] font-semibold text-emerald-700 hover:text-emerald-800 bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1 rounded-lg border border-emerald-200 shadow-xs"
-          >
-            Ready (~88)
-          </button>
         </div>
       </div>
 

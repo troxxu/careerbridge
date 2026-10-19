@@ -247,7 +247,7 @@ export function PricingB2B2C() {
               </div>
               <Link href="/dashboard/b2b">
                 <Button className="w-full bg-brand-navy hover:bg-slate-800 text-white font-bold">
-                  Lihat Demo Portal B2B Himpunan
+                  Buka Portal B2B Himpunan
                 </Button>
               </Link>
             </div>
