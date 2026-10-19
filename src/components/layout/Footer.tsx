@@ -35,15 +35,19 @@ export function Footer() {
           {/* Brand & Mission */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-blue text-white shadow-lg">
-                <Compass className="h-6 w-6" />
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white p-1.5 shadow-md">
+                <img
+                  src="/images/logo-mark.png"
+                  alt="CareerBridge Mark"
+                  className="h-full w-full object-contain"
+                />
               </div>
               <div>
                 <span className="text-xl font-black text-white tracking-tight">
-                  Career<span className="text-brand-blue-light">Bridge</span>
+                  Career<span className="text-cyan-400">Bridge</span>
                 </span>
-                <span className="ml-2 rounded-md bg-emerald-900/60 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-bold text-emerald-400">
-                  MVP 2026
+                <span className="ml-2 rounded-md bg-cyan-950/80 border border-cyan-500/40 px-2 py-0.5 text-[10px] font-bold text-cyan-300">
+                  ITS
                 </span>
               </div>
             </div>

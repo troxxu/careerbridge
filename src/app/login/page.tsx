@@ -201,12 +201,11 @@ export default function LoginPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
           <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-emerald-400">
-                <Compass className="h-4 w-4" />
-              </div>
-              <span className="font-bold text-lg text-slate-900 tracking-tight">
-                Career<span className="text-emerald-600">Bridge</span>
-              </span>
+              <img
+                src="/images/logo-full.png"
+                alt="CareerBridge"
+                className="h-7 sm:h-8 w-auto object-contain"
+              />
             </Link>
             <span className="text-slate-300">/</span>
             <span className="text-xs font-semibold text-slate-600 uppercase tracking-wider">

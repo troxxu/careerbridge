@@ -63,23 +63,15 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex h-16 items-center justify-between gap-4">
         
         {/* Left: Brand & Logo */}
-        <Link href="/" className="flex items-center gap-3 group shrink-0">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 border border-slate-700 text-emerald-400 shadow-xs group-hover:border-emerald-500 transition-colors">
-            <Compass className="h-5 w-5" />
-          </div>
-          <div className="flex flex-col">
-            <div className="flex items-center gap-1.5">
-              <span className="font-bold text-lg sm:text-xl tracking-tight text-slate-900">
-                Career<span className="text-emerald-600">Bridge</span>
-              </span>
-              <span className="rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-bold text-emerald-800">
-                ITS
-              </span>
-            </div>
-            <p className="text-[10px] text-slate-500 font-medium leading-none hidden sm:block">
-              Engineering & Energy Career Platform
-            </p>
-          </div>
+        <Link href="/" className="flex items-center gap-2.5 group shrink-0">
+          <img
+            src="/images/logo-full.png"
+            alt="CareerBridge"
+            className="h-7 sm:h-8 w-auto object-contain"
+          />
+          <span className="rounded-md bg-cyan-50 border border-cyan-200/80 px-1.5 py-0.5 text-[10px] font-bold text-cyan-800 hidden sm:inline-block">
+            ITS
+          </span>
         </Link>
 
         {/* Center: Desktop Navigation Links (Proper spacing & No duplicate button) */}

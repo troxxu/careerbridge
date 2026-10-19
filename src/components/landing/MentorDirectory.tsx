@@ -219,8 +219,8 @@ export function MentorDirectory() {
                 </div>
                 <div className="p-3 rounded-xl border border-slate-100 bg-white">
                   <div className="text-[10px] text-slate-400 font-bold uppercase">Jadwal Sesi W4</div>
-                  <div className="font-bold text-brand-bp mt-0.5">
-                    Sabtu / Minggu (Pagi & Malam)
+                  <div className="font-bold text-cyan-700 mt-0.5">
+                    TBA (Fleksibel Akhir Pekan)
                   </div>
                 </div>
               </div>

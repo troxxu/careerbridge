@@ -4,18 +4,10 @@ import {
   DiagnosticQuestion,
   B2BInstitutionalMetrics,
   NinetyDayActionPlan,
+  ExtendedStudentProfile,
 } from '@/types';
 
-export interface ExtendedStudentProfile extends StudentProfile {
-  pin: string;
-  mentorFeedback?: {
-    strength: string;
-    improvement: string;
-    cvRating: number;
-    interviewRating: number;
-    submittedAt: string;
-  };
-}
+export type { ExtendedStudentProfile };
 
 export const MOCK_MENTORS: MentorProfile[] = [
   {
@@ -100,147 +92,8 @@ export const MOCK_MENTORS: MentorProfile[] = [
   },
 ];
 
-export const MOCK_STUDENTS: ExtendedStudentProfile[] = [
-  {
-    id: 's1',
-    name: 'Ahmad Fauzan Pratama',
-    nrp: '5022211045',
-    pin: '1045',
-    email: 'fauzan.pratama@student.its.ac.id',
-    university: 'Institut Teknologi Sepuluh Nopember',
-    department: 'Teknik Elektro (Sistem Tenaga Listrik)',
-    semester: 6,
-    targetIndustry: 'Oil & Gas',
-    targetFunction: 'Electrical Engineer',
-    careerGoal: 'internship',
-    availabilitySlots: ['sat_morning', 'sun_evening'],
-    formatPreference: 'technical_review',
-    crsScore: 68,
-    linkedinUrl: 'https://linkedin.com/in/fauzan-pratama-sample',
-    cvUrl: 'https://careerbridge.id/uploads/cv_sample_star.pdf',
-    cvStatus: 'under_review',
-    mentorFeedback: {
-      strength: 'Pemahaman teori sistem tenaga, simulasi ETAP, dan dasar API RP 14F sangat baik.',
-      improvement: 'Cantumkan angka efisiensi kuantitatif pada bagian pengalaman proyek laboratorium.',
-      cvRating: 4,
-      interviewRating: 4,
-      submittedAt: '24 Oktober 2026',
-    },
-  },
-  {
-    id: 's2',
-    name: 'Maheswara Yogha Putra Al Ardha',
-    nrp: '5022231188',
-    pin: '1188',
-    email: 'yogha@student.its.ac.id',
-    university: 'Institut Teknologi Sepuluh Nopember',
-    department: 'Teknik Elektro (Sistem Tenaga & Energi)',
-    semester: 6,
-    targetIndustry: 'Renewable Energy',
-    targetFunction: 'Power Systems',
-    careerGoal: 'management_trainee',
-    availabilitySlots: ['sat_morning', 'sat_afternoon'],
-    formatPreference: 'career_roadmap',
-    crsScore: 74,
-    linkedinUrl: 'https://linkedin.com/in/maheswara-yogha',
-    cvUrl: 'https://careerbridge.id/uploads/cv_yogha.pdf',
-    cvStatus: 'reviewed',
-    mentorFeedback: {
-      strength: 'Pemetaan target karier di sektor EBT sangat jelas, pemahaman regulasi RUPTL memadai.',
-      improvement: 'Asah jawaban behavioural interview untuk studi kasus resolusi konflik tim.',
-      cvRating: 5,
-      interviewRating: 4,
-      submittedAt: '24 Oktober 2026',
-    },
-  },
-  {
-    id: 's3',
-    name: 'Ardyan Bagas Trihutama',
-    nrp: '5022231171',
-    pin: '1171',
-    email: 'ardyan@student.its.ac.id',
-    university: 'Institut Teknologi Sepuluh Nopember',
-    department: 'Teknik Elektro (Telekomunikasi & Jaringan)',
-    semester: 6,
-    targetIndustry: 'Power Systems',
-    targetFunction: 'Automation',
-    careerGoal: 'fresh_grad',
-    availabilitySlots: ['sat_morning', 'sun_evening'],
-    formatPreference: 'balanced',
-    crsScore: 62,
-    linkedinUrl: 'https://linkedin.com/in/ardyan-bagas',
-    cvUrl: 'https://careerbridge.id/uploads/cv_ardyan.pdf',
-    cvStatus: 'under_review',
-  },
-  {
-    id: 's4',
-    name: 'M. Aqila Daffa Arya Bimantara',
-    nrp: '5022231187',
-    pin: '1187',
-    email: 'aqila@student.its.ac.id',
-    university: 'Institut Teknologi Sepuluh Nopember',
-    department: 'Teknik Elektro (Otomasi Industri)',
-    semester: 6,
-    targetIndustry: 'Power Systems',
-    targetFunction: 'Automation',
-    careerGoal: 'internship',
-    availabilitySlots: ['sat_morning', 'sun_evening'],
-    formatPreference: 'technical_review',
-    crsScore: 58,
-    cvStatus: 'not_uploaded',
-  },
-  {
-    id: 's5',
-    name: 'Rifky Ananda Riwendra',
-    nrp: '5022231184',
-    pin: '1184',
-    email: 'rifky@student.its.ac.id',
-    university: 'Institut Teknologi Sepuluh Nopember',
-    department: 'Teknik Elektro (Manajemen Energi)',
-    semester: 6,
-    targetIndustry: 'Renewable Energy',
-    targetFunction: 'Project Engineer',
-    careerGoal: 'fresh_grad',
-    availabilitySlots: ['sat_morning', 'weekday_night'],
-    formatPreference: 'balanced',
-    crsScore: 65,
-    cvStatus: 'under_review',
-  },
-  {
-    id: 's6',
-    name: 'Aulia Rahma Dewanti',
-    nrp: '5022211023',
-    pin: '1023',
-    email: 'aulia.rahma@student.its.ac.id',
-    university: 'Institut Teknologi Sepuluh Nopember',
-    department: 'Teknik Elektro (Kelistrikan Lepas Pantai)',
-    semester: 8,
-    targetIndustry: 'Oil & Gas',
-    targetFunction: 'Electrical Engineer',
-    careerGoal: 'fresh_grad',
-    availabilitySlots: ['sat_morning', 'sun_evening'],
-    formatPreference: 'technical_review',
-    crsScore: 71,
-    cvStatus: 'reviewed',
-  },
-  {
-    id: 's7',
-    name: 'Farhan Maulana Hakim',
-    nrp: '5022211099',
-    pin: '1099',
-    email: 'farhan.m@student.its.ac.id',
-    university: 'Institut Teknologi Sepuluh Nopember',
-    department: 'Teknik Elektro (Energi Terbarukan)',
-    semester: 6,
-    targetIndustry: 'Renewable Energy',
-    targetFunction: 'Power Systems',
-    careerGoal: 'internship',
-    availabilitySlots: ['sat_morning', 'sat_afternoon'],
-    formatPreference: 'career_roadmap',
-    crsScore: 54,
-    cvStatus: 'not_uploaded',
-  },
-];
+// Active students will populate dynamically when real users register and complete the diagnostic
+export const MOCK_STUDENTS: ExtendedStudentProfile[] = [];
 
 export const DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
   // 1. Career Clarity & Industry Awareness (5 questions)

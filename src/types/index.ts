@@ -75,6 +75,18 @@ export interface StudentProfile {
   cvStatus?: 'not_uploaded' | 'under_review' | 'reviewed';
 }
 
+export interface ExtendedStudentProfile extends StudentProfile {
+  pin?: string;
+  crsTier?: string;
+  mentorFeedback?: {
+    strength: string;
+    improvement: string;
+    cvRating: number;
+    interviewRating: number;
+    submittedAt: string;
+  };
+}
+
 export interface MentorProfile {
   id: string;
   name: string;

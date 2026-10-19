@@ -21,7 +21,7 @@ export default function DiagnosticPage() {
         {/* Page Header */}
         <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10 space-y-2 sm:space-y-3">
           <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1 text-xs font-semibold text-slate-700 shadow-xs">
-            <Compass className="h-3.5 w-3.5 text-emerald-600" />
+            <Sparkles className="h-3.5 w-3.5 text-cyan-600" />
             <span>Standar Evaluasi Mandiri 2026</span>
           </div>
           <h1 className="text-2xl sm:text-4xl font-bold text-slate-900 tracking-tight">

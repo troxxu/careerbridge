@@ -37,3 +37,5 @@ next-env.d.ts
 /CONTOH WEBSITE REPO BPS-UPDATED GITHUB/
 /anti-slop-main/
 /magicui-main/
+.venv/
+venv/

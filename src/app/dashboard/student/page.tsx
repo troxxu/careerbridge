@@ -39,18 +39,26 @@ export default function StudentDashboardPage() {
 
   // Dynamically resolve student profile from active authenticated user
   const studentPin = user?.nrp ? user.nrp.slice(-4) : '1234';
-  const currentStudent = {
-    ...MOCK_STUDENTS[0],
+  const currentStudent: ExtendedStudentProfile = {
     id: user?.id || 'std-active',
     name: user?.name || 'Mahasiswa Peserta',
     email: user?.email || 'mahasiswa@student.its.ac.id',
     department: user?.department || 'Teknik Elektro',
     university: user?.university || 'Institut Teknologi Sepuluh Nopember',
     nrp: user?.nrp || '5007221001',
+    semester: 6,
     targetIndustry: user?.targetIndustry || 'Offshore Energy & Power Systems',
+    targetFunction: 'Electrical Engineer',
+    careerGoal: 'internship' as const,
+    availabilitySlots: ['sat_morning' as const, 'sun_evening' as const],
+    formatPreference: 'technical_review' as const,
     crsScore: user?.crsScore ?? 68,
     crsTier: user?.crsTier ?? 'Emerging Readiness',
     pin: studentPin,
+    cvUrl: '',
+    linkedinUrl: '',
+    cvStatus: 'not_uploaded' as const,
+    mentorFeedback: undefined,
   };
 
   const assignedMentor = MOCK_MENTORS[0]; // Ir. Hendra Wijaya (BP)
@@ -134,30 +142,30 @@ export default function StudentDashboardPage() {
     {
       week: 'Minggu 1',
       title: 'Career Diagnostic & Goal Setting',
-      status: 'completed',
-      date: '1 - 7 Oktober 2026',
-      badge: 'Selesai',
+      status: 'active',
+      date: 'TBA',
+      badge: 'Tahap 1',
     },
     {
       week: 'Minggu 2',
       title: 'Industry Pathway & Skill Gap Mapping',
-      status: 'completed',
-      date: '8 - 14 Oktober 2026',
-      badge: 'Selesai',
+      status: 'upcoming',
+      date: 'TBA',
+      badge: 'Tahap 2',
     },
     {
       week: 'Minggu 3',
       title: 'Strategic Career Prep (ATS CV & Interview)',
-      status: 'active',
-      date: '15 - 21 Oktober 2026',
-      badge: 'Sedang Berlangsung',
+      status: 'upcoming',
+      date: 'TBA',
+      badge: 'Tahap 3',
     },
     {
       week: 'Minggu 4',
       title: 'Small-Group Mentoring & 90-Day Action Plan',
       status: 'upcoming',
-      date: '22 - 28 Oktober 2026',
-      badge: 'Akan Datang',
+      date: 'TBA',
+      badge: 'Tahap 4',
     },
   ];
 
@@ -389,51 +397,28 @@ export default function StudentDashboardPage() {
                 {assignedMentor.bio}
               </p>
 
-              {/* Scheduled Session Box (Conditional Unlock) */}
-              <div className="bg-blue-50/70 border border-blue-200 rounded-2xl p-4 space-y-3">
+              {/* Scheduled Session Box (TBA) */}
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-xs font-bold text-brand-navy">
-                    <Clock className="h-4 w-4 text-brand-blue" />
+                  <div className="flex items-center gap-2 text-xs font-bold text-slate-800">
+                    <Clock className="h-4 w-4 text-cyan-600" />
                     <span>Jadwal Mentoring W4:</span>
                   </div>
-                  <span className="text-[10px] font-bold bg-blue-100 text-brand-blue px-2 py-0.5 rounded-full">
-                    Terkonfirmasi
+                  <span className="text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded-full">
+                    TBA
                   </span>
                 </div>
 
                 <div className="text-xs font-semibold text-slate-800">
-                  Sabtu, 24 Oktober 2026 • 10:00 - 11:30 WIB
+                  TBA (To Be Announced) • Jadwal Disesuaikan Bersama Mentor
                 </div>
 
-                {isUnlocked ? (
-                  <div className="flex items-center gap-2 pt-1 animate-in fade-in">
-                    <a
-                      href="https://meet.google.com/crb-w4grp-m1"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex-1"
-                    >
-                      <Button size="sm" className="w-full bg-brand-bp hover:bg-green-700 text-xs font-bold gap-1.5 rounded-xl">
-                        <Video className="h-3.5 w-3.5" />
-                        Masuk Google Meet (Privat)
-                      </Button>
-                    </a>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="text-xs font-semibold rounded-xl"
-                      onClick={() => alert('Jadwal telah diekspor ke kalender Google Anda.')}
-                    >
-                      + Kalender
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="bg-white/80 p-3 rounded-xl border border-dashed border-blue-300 text-center">
-                    <span className="text-xs text-slate-500 font-medium">
-                      🔒 Tautan Google Meet terlindungi PIN mahasiswa
-                    </span>
-                  </div>
-                )}
+                <div className="bg-white p-3 rounded-xl border border-slate-200 text-xs text-slate-500 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <span>Tautan Google Meet akan dibagikan H-2 sebelum sesi dimulai.</span>
+                  <span className="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md shrink-0 self-start sm:self-auto">
+                    Segera Diumumkan
+                  </span>
+                </div>
               </div>
             </div>
 
