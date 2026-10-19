@@ -132,27 +132,27 @@ export function DiagnosticForm() {
   ];
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-10 shadow-sm space-y-6">
+    <div className="bg-white rounded-3xl border border-slate-200/90 p-4 sm:p-8 md:p-10 shadow-sm space-y-4 sm:space-y-6">
       {/* Authenticated Participant Banner */}
       {user && (
-        <div className="flex items-center justify-between p-3.5 bg-emerald-50/80 border border-emerald-200 rounded-2xl text-xs text-slate-700">
+        <div className="flex items-center justify-between p-3 sm:p-3.5 bg-emerald-50/80 border border-emerald-200 rounded-2xl text-xs text-slate-700">
           <div className="flex items-center gap-2.5">
-            <div className="h-8 w-8 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs">
+            <div className="h-8 w-8 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs shrink-0">
               {user.name.charAt(0)}
             </div>
-            <div>
-              <div className="font-bold text-slate-900 flex items-center gap-2">
-                <span>{user.name}</span>
-                <span className="text-[10px] font-semibold bg-emerald-200/60 text-emerald-800 px-2 py-0.5 rounded-full">
+            <div className="min-w-0">
+              <div className="font-bold text-slate-900 flex items-center gap-2 truncate">
+                <span className="truncate">{user.name}</span>
+                <span className="text-[10px] font-semibold bg-emerald-200/60 text-emerald-800 px-2 py-0.5 rounded-full shrink-0">
                   Akun Terverifikasi
                 </span>
               </div>
-              <div className="text-[11px] text-slate-500 font-normal">
+              <div className="text-[11px] text-slate-500 font-normal truncate">
                 {user.nrp ? `NRP ${user.nrp} • ` : ''}{user.department || 'Mahasiswa Teknik'} • Target: {user.targetIndustry || 'Industri Energi & Keteknikan'}
               </div>
             </div>
           </div>
-          <span className="text-[11px] font-semibold text-emerald-700 hidden sm:inline-block">
+          <span className="text-[11px] font-semibold text-emerald-700 hidden sm:inline-block shrink-0">
             Sesi Asesmen Aktif ✓
           </span>
         </div>
@@ -219,14 +219,14 @@ export function DiagnosticForm() {
       </div>
 
       {/* 5 Questions for the active pillar */}
-      <div className="space-y-6 pt-2">
+      <div className="space-y-4 sm:space-y-6 pt-1 sm:pt-2">
         {currentQuestions.map((q, idx) => {
           const selectedValue = answers[q.id];
 
           return (
             <div
               key={q.id}
-              className={`rounded-2xl p-5 sm:p-6 border transition-all ${
+              className={`rounded-2xl p-4 sm:p-6 border transition-all ${
                 selectedValue !== undefined
                   ? 'bg-slate-50/70 border-slate-200'
                   : 'bg-white border-slate-200 shadow-xs'
@@ -249,36 +249,43 @@ export function DiagnosticForm() {
                 </div>
               </div>
 
-              {/* Likert Scale (1 to 5) Options */}
-              <div className="grid grid-cols-1 sm:grid-cols-5 gap-2 pt-2">
-                {likertOptions.map((opt) => {
-                  const isSelected = selectedValue === opt.value;
-                  return (
-                    <button
-                      key={opt.value}
-                      type="button"
-                      onClick={() => handleSelectScore(q.id, opt.value)}
-                      className={`p-3 rounded-xl border text-left sm:text-center transition-all flex sm:flex-col items-center sm:justify-center justify-between gap-1 min-h-[44px] ${
-                        isSelected
-                          ? 'border-brand-blue bg-blue-600 text-white font-bold shadow-md scale-[1.02]'
-                          : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
-                      }`}
-                    >
-                      <span className="text-sm font-black">{opt.short}</span>
-                      <span
-                        className={`text-[10px] leading-tight ${
-                          isSelected ? 'text-blue-100' : 'text-slate-500'
+              {/* Likert Scale (1 to 5) Options - Compact 5-column touch rating on mobile */}
+              <div className="space-y-1.5 pt-1">
+                <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
+                  {likertOptions.map((opt) => {
+                    const isSelected = selectedValue === opt.value;
+                    return (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => handleSelectScore(q.id, opt.value)}
+                        className={`p-2 sm:p-3 rounded-xl border text-center transition-all flex flex-col items-center justify-center gap-0.5 sm:gap-1 min-h-[46px] sm:min-h-[58px] ${
+                          isSelected
+                            ? 'border-brand-blue bg-blue-600 text-white font-bold shadow-md scale-[1.03]'
+                            : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
                         }`}
                       >
-                        {opt.value === 1 && 'Sangat Tidak Setuju'}
-                        {opt.value === 2 && 'Tidak Setuju'}
-                        {opt.value === 3 && 'Cukup / Ragu'}
-                        {opt.value === 4 && 'Setuju'}
-                        {opt.value === 5 && 'Sangat Setuju'}
-                      </span>
-                    </button>
-                  );
-                })}
+                        <span className="text-sm sm:text-base font-black">{opt.short}</span>
+                        <span
+                          className={`text-[9px] sm:text-[10px] leading-tight hidden xs:block sm:block ${
+                            isSelected ? 'text-blue-100 font-medium' : 'text-slate-500'
+                          }`}
+                        >
+                          {opt.value === 1 && 'Sangat Rendah'}
+                          {opt.value === 2 && 'Rendah'}
+                          {opt.value === 3 && 'Cukup'}
+                          {opt.value === 4 && 'Tinggi'}
+                          {opt.value === 5 && 'Mahir'}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+                {/* Visual scale legend on small screens */}
+                <div className="flex justify-between items-center text-[10px] sm:text-xs text-slate-400 px-1 pt-0.5">
+                  <span className="truncate max-w-[140px] sm:max-w-none">1: Sangat Tidak Setuju</span>
+                  <span className="truncate max-w-[140px] sm:max-w-none text-right">5: Sangat Setuju / Mahir</span>
+                </div>
               </div>
             </div>
           );

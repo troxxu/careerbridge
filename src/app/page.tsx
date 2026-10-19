@@ -51,18 +51,18 @@ function HomeContent() {
       <FaqSection />
 
       {/* 8. Bottom Final Call to Action */}
-      <section className="py-20 bg-slate-900 border-t border-slate-800 text-white relative overflow-hidden">
-        <div className="container max-w-5xl mx-auto px-4 text-center relative z-10 space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-300">
+      <section className="py-12 sm:py-16 md:py-20 bg-slate-900 border-t border-slate-800 text-white relative overflow-hidden">
+        <div className="container max-w-5xl mx-auto px-4 text-center relative z-10 space-y-4 sm:space-y-6">
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-300">
             <Sparkles className="h-4 w-4" />
             <span>Pendaftaran Cohort Batch 1 Dibuka</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
             Mulai Transformasi Kesiapan Karier Anda Hari Ini
           </h2>
 
-          <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
+          <p className="text-xs sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
             Ambil tes diagnostik mandiri dalam 5 menit, ketahui posisi Career Readiness Score Anda, dan persiapkan langkah konkret menuju industri energi dan teknik impian.
           </p>
 

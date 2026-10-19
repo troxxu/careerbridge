@@ -9,53 +9,53 @@ export function PricingB2B2C() {
   const [tab, setTab] = useState<'individual' | 'b2b'>('individual');
 
   return (
-    <section id="pricing" className="py-20 bg-white">
+    <section id="pricing" className="py-10 sm:py-16 md:py-20 bg-white">
       <div className="container max-w-6xl mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3 sm:space-y-4">
           <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3.5 py-1 text-xs font-bold text-brand-blue">
             <Sparkles className="h-4 w-4" />
             B2B2C Hybrid Model
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-navy tracking-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-brand-navy tracking-tight">
             Pilihan Investasi yang Adil, Terjangkau & Berdampak Terukur
           </h2>
-          <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+          <p className="text-slate-600 text-xs sm:text-sm md:text-base leading-relaxed">
             Didesain khusus untuk mahasiswa secara mandiri maupun program kolaborasi resmi bersama Himpunan Mahasiswa Departemen (HMD), BEM, dan Fakultas.
           </p>
 
           {/* Tab Selector */}
-          <div className="inline-flex rounded-2xl bg-slate-100 p-1.5 border border-slate-200 shadow-inner mt-4">
+          <div className="inline-flex w-full sm:w-auto rounded-2xl bg-slate-100 p-1 border border-slate-200 shadow-inner mt-2 sm:mt-4">
             <button
               onClick={() => setTab('individual')}
-              className={`flex items-center gap-2 rounded-xl px-5 py-2.5 text-xs sm:text-sm font-bold transition-all ${
+              className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-2 rounded-xl px-3 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-bold transition-all ${
                 tab === 'individual'
                   ? 'bg-white text-brand-navy shadow-sm'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <User className="h-4 w-4" />
-              Paket Mahasiswa Mandiri
+              <User className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+              Mahasiswa Mandiri
             </button>
             <button
               onClick={() => setTab('b2b')}
-              className={`flex items-center gap-2 rounded-xl px-5 py-2.5 text-xs sm:text-sm font-bold transition-all ${
+              className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 sm:gap-2 rounded-xl px-3 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-bold transition-all ${
                 tab === 'b2b'
                   ? 'bg-brand-navy text-white shadow-sm'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <Building2 className="h-4 w-4" />
-              Paket Himpunan / Institusi
+              <Building2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+              Himpunan / Institusi
             </button>
           </div>
         </div>
 
         {/* Tab 1: Individual Students */}
         {tab === 'individual' && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 lg:gap-8 items-stretch">
             {/* Free Tier */}
-            <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm flex flex-col justify-between">
+            <div className="bg-white rounded-3xl border border-slate-200 p-5 sm:p-7 md:p-8 shadow-sm flex flex-col justify-between">
               <div>
                 <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">
                   Top-of-Funnel
@@ -99,8 +99,8 @@ export function PricingB2B2C() {
             </div>
 
             {/* Featured Cohort Tier */}
-            <div className="bg-gradient-to-b from-brand-navy to-slate-900 text-white rounded-3xl p-8 shadow-2xl relative border-2 border-brand-blue flex flex-col justify-between transform md:-translate-y-2">
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-brand-blue text-white px-4 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider shadow-md">
+            <div className="bg-gradient-to-b from-brand-navy to-slate-900 text-white rounded-3xl p-5 sm:p-7 md:p-8 shadow-2xl relative border-2 border-brand-blue flex flex-col justify-between transform md:-translate-y-2">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-brand-blue text-white px-4 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider shadow-md whitespace-nowrap">
                 Paling Direkomendasikan
               </div>
               <div>
@@ -160,7 +160,7 @@ export function PricingB2B2C() {
             </div>
 
             {/* Individual Review Tier */}
-            <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm flex flex-col justify-between">
+            <div className="bg-white rounded-3xl border border-slate-200 p-5 sm:p-7 md:p-8 shadow-sm flex flex-col justify-between">
               <div>
                 <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">
                   Fast Feedback
@@ -207,9 +207,9 @@ export function PricingB2B2C() {
 
         {/* Tab 2: Institutional / B2B */}
         {tab === 'b2b' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-8 max-w-4xl mx-auto">
             {/* Himpunan Package */}
-            <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm flex flex-col justify-between">
+            <div className="bg-white rounded-3xl border border-slate-200 p-5 sm:p-7 md:p-8 shadow-sm flex flex-col justify-between">
               <div>
                 <div className="inline-block rounded-full bg-blue-100 text-brand-blue px-3 py-1 text-xs font-bold mb-3">
                   Untuk HMD / BEM
@@ -253,7 +253,7 @@ export function PricingB2B2C() {
             </div>
 
             {/* Department / Faculty Enterprise */}
-            <div className="bg-gradient-to-br from-slate-900 to-brand-navy text-white rounded-3xl p-8 shadow-xl flex flex-col justify-between border border-slate-700">
+            <div className="bg-gradient-to-br from-slate-900 to-brand-navy text-white rounded-3xl p-5 sm:p-7 md:p-8 shadow-xl flex flex-col justify-between border border-slate-700">
               <div>
                 <div className="inline-block rounded-full bg-emerald-900/60 border border-emerald-500/40 text-emerald-400 px-3 py-1 text-xs font-bold mb-3">
                   Untuk Departemen / Fakultas

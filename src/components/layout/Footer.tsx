@@ -30,8 +30,8 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="container max-w-6xl mx-auto py-12 px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+      <div className="container max-w-6xl mx-auto py-8 sm:py-12 px-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 sm:gap-8 mb-8 sm:mb-12">
           {/* Brand & Mission */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-3">

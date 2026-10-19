@@ -10,7 +10,8 @@ import {
   Calendar, 
   Linkedin, 
   Filter,
-  Users
+  Users,
+  ChevronDown
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
@@ -20,6 +21,7 @@ export function MentorDirectory() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDomain, setSelectedDomain] = useState<string>('all');
   const [activeMentorModal, setActiveMentorModal] = useState<string | null>(null);
+  const [showAllMobile, setShowAllMobile] = useState(false);
 
   const domains = ['all', 'Oil & Gas', 'Renewable Energy', 'Power Systems'];
 
@@ -37,10 +39,10 @@ export function MentorDirectory() {
   const selectedModalMentor = MOCK_MENTORS.find((m) => m.id === activeMentorModal);
 
   return (
-    <section id="mentors" className="py-20 bg-slate-50 border-t border-slate-200">
+    <section id="mentors" className="py-10 sm:py-16 md:py-20 bg-slate-50 border-t border-slate-200">
       <div className="container max-w-6xl mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-10 space-y-3">
           <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3.5 py-1 text-xs font-bold text-brand-blue">
             <Sparkles className="h-4 w-4" />
             Curated Industry Mentors
@@ -84,84 +86,102 @@ export function MentorDirectory() {
           </div>
         </div>
 
-        {/* Mentors Grid (Responsive Mobile 2-column or desktop 3-col) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredMentors.map((mentor) => (
-            <div
-              key={mentor.id}
-              className="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:border-blue-300"
-            >
-              <div>
-                {/* Top Profile Header */}
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="relative shrink-0">
-                    <img
-                      src={mentor.avatarUrl}
-                      alt={mentor.name}
-                      className="h-16 w-16 rounded-2xl object-cover ring-2 ring-slate-100 group-hover:ring-brand-blue transition-all"
-                    />
-                    <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-white text-[10px]">
-                      ✓
+        {/* Mentors Grid (Responsive Mobile 1-col with expand, Tablet 2-col, Desktop 3-col) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {filteredMentors.map((mentor, index) => {
+            const isHiddenOnMobile = !showAllMobile && index >= 2;
+            return (
+              <div
+                key={mentor.id}
+                className={`bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-6 shadow-xs hover:shadow-md transition-all duration-300 flex-col justify-between group hover:border-emerald-300 ${
+                  isHiddenOnMobile ? 'hidden sm:flex' : 'flex'
+                }`}
+              >
+                <div>
+                  {/* Top Profile Header */}
+                  <div className="flex items-start gap-3.5 mb-3.5">
+                    <div className="relative shrink-0">
+                      <img
+                        src={mentor.avatarUrl}
+                        alt={mentor.name}
+                        className="h-14 w-14 sm:h-16 sm:w-16 rounded-2xl object-cover ring-2 ring-slate-100 group-hover:ring-emerald-400 transition-all"
+                      />
+                      <span className="absolute -bottom-1 -right-1 flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-emerald-500 text-white text-[9px] sm:text-[10px]">
+                        ✓
+                      </span>
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm sm:text-base font-bold text-slate-900 leading-snug group-hover:text-emerald-700 transition-colors truncate">
+                        {mentor.name}
+                      </h3>
+                      <div className="flex items-center gap-1.5 text-xs text-emerald-700 font-semibold mt-0.5">
+                        <Building className="h-3.5 w-3.5 shrink-0" />
+                        <span className="truncate">{mentor.companyName}</span>
+                      </div>
+                      <div className="text-[11px] text-slate-500 font-normal truncate mt-0.5">
+                        {mentor.currentTitle}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Badges */}
+                  <div className="flex flex-wrap gap-1.5 mb-3.5">
+                    <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-700">
+                      {mentor.industryDomain}
+                    </span>
+                    <span className="rounded-md bg-blue-50 px-2 py-0.5 text-[10px] font-bold text-blue-700 border border-blue-200">
+                      {mentor.jobFunction}
+                    </span>
+                    <span className="rounded-md bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 border border-emerald-200">
+                      {mentor.yearsOfExperience} Thn Pengalaman
                     </span>
                   </div>
 
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-base font-bold text-brand-navy leading-snug group-hover:text-brand-blue transition-colors truncate">
-                      {mentor.name}
-                    </h3>
-                    <div className="flex items-center gap-1.5 text-xs text-brand-blue font-semibold mt-0.5">
-                      <Building className="h-3.5 w-3.5 shrink-0" />
-                      <span className="truncate">{mentor.companyName}</span>
-                    </div>
-                    <div className="text-[11px] text-slate-500 font-medium truncate mt-0.5">
-                      {mentor.currentTitle}
-                    </div>
+                  {/* Bio snippet */}
+                  <p className="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-2 sm:line-clamp-3 font-normal">
+                    {mentor.bio}
+                  </p>
+                </div>
+
+                {/* Card Footer */}
+                <div className="border-t border-slate-100 pt-3 space-y-2">
+                  <div className="flex items-center justify-between text-[11px] text-slate-500">
+                    <span>Kapasitas Kelompok:</span>
+                    <span className="font-bold text-slate-900">Maks 5 Mentee</span>
                   </div>
+                  <div className="flex items-center justify-between text-[11px] text-slate-500">
+                    <span>Gaya Bimbingan:</span>
+                    <span className="font-semibold text-slate-700 capitalize">
+                      {mentor.coachingStyle.replace('_', ' ')}
+                    </span>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setActiveMentorModal(mentor.id)}
+                    className="w-full text-xs font-semibold mt-1.5 rounded-xl border-slate-200 hover:bg-emerald-50 hover:text-emerald-800 hover:border-emerald-300 h-9"
+                  >
+                    Detail Profil & Jadwal
+                  </Button>
                 </div>
-
-                {/* Badges */}
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-700">
-                    {mentor.industryDomain}
-                  </span>
-                  <span className="rounded-md bg-blue-50 px-2 py-0.5 text-[10px] font-bold text-brand-blue border border-blue-200">
-                    {mentor.jobFunction}
-                  </span>
-                  <span className="rounded-md bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 border border-emerald-200">
-                    {mentor.yearsOfExperience} Thn Pengalaman
-                  </span>
-                </div>
-
-                {/* Bio snippet */}
-                <p className="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">
-                  {mentor.bio}
-                </p>
               </div>
-
-              {/* Card Footer: Match Rule Info & Action */}
-              <div className="border-t border-slate-100 pt-3 space-y-2">
-                <div className="flex items-center justify-between text-[11px] text-slate-500">
-                  <span>Kapasitas Kelompok:</span>
-                  <span className="font-bold text-brand-navy">Maks 5 Mentee</span>
-                </div>
-                <div className="flex items-center justify-between text-[11px] text-slate-500">
-                  <span>Gaya Bimbingan:</span>
-                  <span className="font-semibold text-slate-700 capitalize">
-                    {mentor.coachingStyle.replace('_', ' ')}
-                  </span>
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setActiveMentorModal(mentor.id)}
-                  className="w-full text-xs font-bold mt-2 rounded-xl border-slate-200 hover:bg-blue-50 hover:text-brand-blue hover:border-blue-300"
-                >
-                  Detail Profil & Spesialisasi
-                </Button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
+
+        {/* Mobile Expand / Collapse Button */}
+        {filteredMentors.length > 2 && (
+          <div className="sm:hidden text-center mt-4">
+            <button
+              onClick={() => setShowAllMobile(!showAllMobile)}
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-white border border-slate-200 px-4 py-2 rounded-xl shadow-xs"
+            >
+              <span>{showAllMobile ? 'Sembunyikan Sebagian Mentor' : `Lihat Semua Mentor (${filteredMentors.length})`}</span>
+              <ChevronDown className={`h-3.5 w-3.5 transition-transform ${showAllMobile ? 'rotate-180' : ''}`} />
+            </button>
+          </div>
+        )}
 
         {/* Detail Modal if open */}
         {selectedModalMentor && (

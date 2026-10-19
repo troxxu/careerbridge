@@ -35,18 +35,18 @@ export function FaqSection() {
   ];
 
   return (
-    <section className="py-20 bg-slate-50 border-t border-slate-200">
+    <section className="py-10 sm:py-16 md:py-20 bg-slate-50 border-t border-slate-200">
       <div className="container max-w-4xl mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center mb-12 space-y-3">
+        <div className="text-center mb-8 sm:mb-12 space-y-2.5">
           <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3.5 py-1 text-xs font-bold text-brand-blue">
             <HelpCircle className="h-4 w-4" />
             Frequently Asked Questions
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-navy tracking-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-brand-navy tracking-tight">
             Pertanyaan yang Sering Diajukan
           </h2>
-          <p className="text-slate-600 text-sm leading-relaxed">
+          <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
             Transparansi mengenai batasan layanan, alur program, dan komitmen mutu Career Bridge.
           </p>
         </div>
@@ -66,7 +66,7 @@ export function FaqSection() {
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  className="w-full text-left p-5 flex items-center justify-between gap-4 font-bold text-sm sm:text-base text-brand-navy"
+                  className="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-3 font-bold text-xs sm:text-sm md:text-base text-brand-navy"
                 >
                   <span className="flex items-center gap-2">
                     {faq.highlight && (

@@ -3,18 +3,18 @@ import { Award, CheckCircle2, Quote, Users, ShieldAlert, Sparkles, Building } fr
 
 export function PilotShowcase() {
   return (
-    <section className="py-20 bg-slate-50 border-b border-slate-200/80">
+    <section className="py-10 sm:py-16 md:py-20 bg-slate-50 border-b border-slate-200/80">
       <div className="container max-w-6xl mx-auto px-4">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3">
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-300 bg-emerald-50 px-3.5 py-1 text-xs font-bold text-emerald-800">
             <Sparkles className="h-4 w-4 text-emerald-600" />
             Social Proof & Pilot Validation
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-navy tracking-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-brand-navy tracking-tight">
             Berangkat dari Kebutuhan Nyata Komunitas Mahasiswa Energi
           </h2>
-          <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+          <p className="text-slate-600 text-xs sm:text-sm md:text-base leading-relaxed">
             Career Bridge diinisiasi dan diuji coba melalui jaringan inisiatif karier{' '}
             <strong className="text-brand-navy">SPE ITS SC Career Coaching Network</strong>,
             menghubungkan lebih dari 100 mahasiswa teknik dengan praktisi industri migas dan transisi energi.
@@ -22,12 +22,12 @@ export function PilotShowcase() {
         </div>
 
         {/* 3 Pillars of Traction */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-            <div className="h-12 w-12 rounded-xl bg-blue-50 text-brand-blue flex items-center justify-center mb-4">
-              <Users className="h-6 w-6" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-blue-50 text-brand-blue flex items-center justify-center mb-3 sm:mb-4">
+              <Users className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
-            <h3 className="text-lg font-bold text-brand-navy mb-2">
+            <h3 className="text-base sm:text-lg font-bold text-brand-navy mb-1 sm:mb-2">
               100+ Member Aktif
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed">
@@ -35,11 +35,11 @@ export function PilotShowcase() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-            <div className="h-12 w-12 rounded-xl bg-emerald-50 text-brand-emerald flex items-center justify-center mb-4">
-              <Award className="h-6 w-6" />
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-emerald-50 text-brand-emerald flex items-center justify-center mb-3 sm:mb-4">
+              <Award className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
-            <h3 className="text-lg font-bold text-brand-navy mb-2">
+            <h3 className="text-base sm:text-lg font-bold text-brand-navy mb-1 sm:mb-2">
               Cohort Model Teruji
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed">
@@ -47,11 +47,11 @@ export function PilotShowcase() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-            <div className="h-12 w-12 rounded-xl bg-green-50 text-brand-bp flex items-center justify-center mb-4">
-              <Building className="h-6 w-6" />
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-green-50 text-brand-bp flex items-center justify-center mb-3 sm:mb-4">
+              <Building className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
-            <h3 className="text-lg font-bold text-brand-navy mb-2">
+            <h3 className="text-base sm:text-lg font-bold text-brand-navy mb-1 sm:mb-2">
               Jaringan Alumni Multi-Sektor
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed">
@@ -61,7 +61,7 @@ export function PilotShowcase() {
         </div>
 
         {/* Spotlight Testimonial Box */}
-        <div className="bg-gradient-to-br from-brand-navy via-slate-900 to-slate-950 rounded-3xl p-8 sm:p-10 text-white relative overflow-hidden shadow-xl">
+        <div className="bg-gradient-to-br from-brand-navy via-slate-900 to-slate-950 rounded-3xl p-5 sm:p-8 md:p-10 text-white relative overflow-hidden shadow-xl">
           <div className="absolute right-0 bottom-0 translate-x-12 translate-y-12 w-64 h-64 bg-brand-blue/20 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
